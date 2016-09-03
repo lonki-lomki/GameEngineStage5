@@ -30,6 +30,10 @@ namespace GameEngineStage5
 
         /////////////////////////////////////////////////////////
 
+        public TileMap map;
+
+        public Scene curScene;
+
         //public Player player;
 
         //public Landscape landscape;

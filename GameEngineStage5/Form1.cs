@@ -58,7 +58,10 @@ namespace GameEngineStage5
 
             //------------------------------------------------------
 
-
+            // Создать игровую сцену
+            GameScene gs = new GameScene(GameData.GameState.Level, gd);
+            gd.curScene = gs;
+            gs.Init();
 
 
         }
@@ -72,7 +75,11 @@ namespace GameEngineStage5
 
             delta = (int)(tickCount - saveTickCount);
 
+            // Обновить мир
             gd.world.update(delta);
+
+            // Обновить игровую сцену
+            gd.curScene.Update(delta);
 
             // Проверить актуальность объектов (убрать со сцены уничтоженные объекты)
             for (int i = gd.world.objects.Count - 1; i >= 0; i--)

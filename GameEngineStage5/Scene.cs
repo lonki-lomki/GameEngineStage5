@@ -10,7 +10,15 @@ namespace GameEngineStage5
     public class Scene
     {
 
+        public GameData.GameState ID;
 
+        public GameData gd;
+
+        public Scene(GameData.GameState ID, GameData gd)
+        {
+            this.ID = ID;
+            this.gd = gd;
+        }
 
         virtual public void Init()
         {
@@ -22,7 +30,7 @@ namespace GameEngineStage5
 
         }
 
-        virtual public void Update()
+        virtual public void Update(int delta)
         {
 
         }

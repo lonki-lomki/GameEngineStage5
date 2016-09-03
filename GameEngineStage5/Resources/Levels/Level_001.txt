@@ -1,0 +1,53 @@
+; Tile map: Level 1
+[MAP]
+##################
+#***........+....#
+#..*....+........#
+#..**..........+.#
+#...*.....*****..#
+#.+.*..+..*...*..#
+#...*.....*...*..#
+#...*******...*..#
+#.............*..#
+#.+....********..#
+#......*.......+.#
+#..+...*....+....#
+##################
+[LEGEND]
+.:tile_space.png
+#:tile_wall.png
+*:tile_path.png
++:tile_busy.png
+m1:tile4_2
+m2:tile4_7
+m3:tile4_8
+t1:tile4_3
+t2:tile4_9
+t3:tile4_10
+b:tile4_6
+[SPRITES]
+tile4
+[PATH]
+19:20:21:39:57:58:76:94:112:130:131:132:133:134:135:136:118:100:82:83:84:85:86:104:122:140:158:176:175:174:173:172:171:170:169:187:205
+[MOBS]
+mob1:speed=1.6,hp=1.0,damage=1.0,exp=1.0,tile_type=m1
+mob2:speed=1.3,hp=2.0,damage=2.0,exp=2.0,tile_type=m2
+mob3:speed=1.0,hp=3.0,damage=3.0,exp=3.0,tile_type=m3
+[TOWERS]
+tower1:name=Tower1,desc=First Tower,elem=Fire,damage=1.0,dam_rad=3.0,dam_freq=2.0,bullet_speed=3.0,tile_type=t1,cost=50,next=tower2
+tower2:name=Tower2,desc=Second Tower,elem=Water,damage=2.0,dam_rad=2.0,dam_freq=1.0,bullet_speed=2.0,tile_type=t2,cost=75,next=tower3
+tower3:name=Tower3,desc=Third Tower,elem=Air,damage=3.0,dam_rad=4.0,dam_freq=3.0,bullet_speed=4.0,tile_type=t3,cost=100,next=null
+[WAVES]
+mob1:5
+mob1:7
+mob1:10
+mob1:5,mob2:5
+mob1:7,mob2:7
+mob1:10,mob2:5
+mob1:10,mob2:10
+mob2:7,mob3:5,mob1:7
+mob2:10,mob3:7,mob1:7
+mob2:10,mob3:10,mob1:10
+mob2:12,mob3:12,mob1:12
+mob3:15,mob2:15,mob1:15 
+[END]
