@@ -32,7 +32,9 @@ namespace GameEngineStage5
 
         public TileMap map;
 
-        public Scene curScene;
+		public Scene curScene = null;
+
+		public bool sceneChange = false;
 
         //public Player player;
 

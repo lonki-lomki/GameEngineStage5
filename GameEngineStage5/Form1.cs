@@ -5,6 +5,11 @@ using System.Windows.Forms;
 
 namespace GameEngineStage5
 {
+
+	// TODO: сделать менеджер ресурсов (картинок) с кешированием
+	// TODO: чтение пути из файла
+
+
     public partial class Form1 : Form
     {
         private Timer timer = new Timer();
@@ -27,7 +32,7 @@ namespace GameEngineStage5
         {
             InitializeComponent();
 
-            //log = new Logger("Log.txt");
+            log = new Logger("Log.txt");
 
             gd = GameData.Instance;
             gd.log = log;
@@ -58,14 +63,23 @@ namespace GameEngineStage5
 
             //------------------------------------------------------
 
-            // Создать игровую сцену
+            // Создать стартовую сцену игры
             GameScene gs = new GameScene(GameData.GameState.Level, gd);
             gd.curScene = gs;
-            gs.Init();
 
+			gd.curScene.Init();
+
+			gd.sceneChange = true;
 
         }
 
+		///////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Обработка событий таймера
+		/// </summary>
+		/// <param name="obj">Object.</param>
+		/// <param name="ea">Ea.</param>
+		///////////////////////////////////////////////////////////////////////
         private void OnTimer(object obj, EventArgs ea)
         {
             int delta;
@@ -74,6 +88,21 @@ namespace GameEngineStage5
             tickCount = Environment.TickCount;
 
             delta = (int)(tickCount - saveTickCount);
+
+			// Проверить флаг смены сцены
+			if (gd.sceneChange == true) {
+				// Удалить все объекты из физ. мира
+				gd.world.objects.Clear();
+
+				// Перенести "живые" объекты из текущей сцены в физический мир
+				foreach (Entity ent in gd.curScene.objects) {
+					if (ent.isDestroyed () == false) {
+						gd.world.add (ent);
+					}
+				}
+				// Сбросить флаг
+				gd.sceneChange = false;
+			}
 
             // Обновить мир
             gd.world.update(delta);
@@ -91,40 +120,33 @@ namespace GameEngineStage5
                 }
             }
 
-            // Проверить коллизию между платформой и кораблем
-            /*
-            PointF pos = gd.player.getPosition();
-            Vector v1 = gd.pc1.rotate(gd.player.getAngle() - 90.0f);
-            Vector v2 = gd.pc2.rotate(gd.player.getAngle() - 90.0f);
-            if (((RectangleCollider)gd.platform.getCollider()).getRect().Contains(pos.X + 21 + v1.X, pos.Y + 21 + v1.Y) == true ||
-                ((RectangleCollider)gd.platform.getCollider()).getRect().Contains(pos.X + 21 + v2.X, pos.Y + 21 + v2.Y) == true)
-            {
-                // Проверить скорость, на которой было касание платформы
-                if (Math.Abs(gd.player.getVelocity().Y) > CONFIG.MAX_LANDING_SPEED)
-                {
-                    // Сели на платформу с допустимой скоростью - ПОБЕДА
-                    gd.currentGameState = GameData.GameState.GameOver;
-                }
-                else
-                {
-                    // Разбились об платформу
-                    gd.currentGameState = GameData.GameState.GameWin;
-                    gd.player.setDestroyed(true);
-                }
-
-            }
-            */
-
             saveTickCount = tickCount;
 
             Invalidate(false);
         }
 
+
+		///////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Обработка нажатых клавиш
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		///////////////////////////////////////////////////////////////////////
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-
+			// Вызвать обработчик нажатий клавиш текущей сцены
+			gd.curScene.KeyDown(sender, e);
         }
 
+
+		///////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Обработка событий перерисовки содержимого окна
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		///////////////////////////////////////////////////////////////////////
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -136,7 +158,7 @@ namespace GameEngineStage5
                 g.DrawImage(backgroundImage, 0.0f, 0.0f);
             }
 
-
+/*
             if (gd.currentGameState == GameData.GameState.GameWin)
             {
                 g.DrawString("WIN!", new Font("Arial", 30), Brushes.Green, 350.0f, 250.0f);
@@ -149,7 +171,7 @@ namespace GameEngineStage5
                 g.DrawString("GAME OVER!", new Font("Arial", 30), Brushes.Red, 270.0f, 250.0f);
                 return;
             }
-
+*/
 
             // Цикл отображения всех объектов на всех уровнях
             // TODO: перенести в отдельный метод класса World

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GameEngineStage5
 {
@@ -10,7 +11,15 @@ namespace GameEngineStage5
     public class Scene
     {
 
-        public GameData.GameState ID;
+        /// <summary>
+        /// Уникальный идентификатор сцены
+        /// </summary>
+		public GameData.GameState ID;
+
+		/// <summary>
+		/// Список объектов на сцене
+		/// </summary>
+		public List<Entity> objects = new List<Entity> ();
 
         public GameData gd;
 
@@ -35,12 +44,12 @@ namespace GameEngineStage5
 
         }
 
-        virtual public void KeyDown()
+		virtual public void KeyDown(object sender, KeyEventArgs e)
         {
 
         }
 
-        virtual public void KeyUp()
+		virtual public void KeyUp(object sender, KeyEventArgs e)
         {
 
         }
