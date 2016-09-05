@@ -8,6 +8,7 @@ namespace GameEngineStage5
 
 	// TODO: сделать менеджер ресурсов (картинок) с кешированием
 	// TODO: чтение пути из файла
+	// TODO: работа с тайловыми картами из редактора Tiled (.tmx)
 
 
     public partial class Form1 : Form
@@ -27,6 +28,8 @@ namespace GameEngineStage5
         private Image backgroundImage;
 
         private Logger log;
+
+		private string old_title;	// Оригинальный текст в заголовке окна
 
         public Form1()
         {
@@ -61,6 +64,8 @@ namespace GameEngineStage5
             // Создать физический мир
             gd.world = new PhysWorld(log);
 
+			old_title = this.Text;
+
             //------------------------------------------------------
 
             // Создать стартовую сцену игры
@@ -70,6 +75,7 @@ namespace GameEngineStage5
 			gd.curScene.Init();
 
 			gd.sceneChange = true;
+
 
         }
 
@@ -88,6 +94,12 @@ namespace GameEngineStage5
             tickCount = Environment.TickCount;
 
             delta = (int)(tickCount - saveTickCount);
+
+			// Вычислить FPS
+			float fps = 1000 / delta;
+
+			// Вывести сообщение в заголовке окна
+			this.Text = old_title + " - " + fps + " FPS";
 
 			// Проверить флаг смены сцены
 			if (gd.sceneChange == true) {
