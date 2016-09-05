@@ -66,6 +66,9 @@ namespace GameEngineStage5
 
 			old_title = this.Text;
 
+            // Инициализация менеджера ресурсов
+            gd.rm = ResourceManager.Instance;
+
             //------------------------------------------------------
 
             // Создать стартовую сцену игры

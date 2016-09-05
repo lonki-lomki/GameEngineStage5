@@ -28,6 +28,8 @@ namespace GameEngineStage5
 
         public Logger log;
 
+        public ResourceManager rm;
+
         /////////////////////////////////////////////////////////
 
         public TileMap map;
