@@ -45,7 +45,8 @@ namespace GameEngineStage5
                 {
 					//g.DrawString (s.Substring (i, 1), new Font ("Arial", 12), Brushes.Black, position.X + i * 10, position.Y + j * 10);
 					//Image img = Image.FromFile(@"Resources\Sprites\"+map.legend[s.Substring (i, 1)]);
-					g.DrawImage(Image.FromFile(@"Resources\Sprites\"+map.legend[s.Substring (i, 1)]), position.X + i * CONFIG.TILE_SIZE, position.Y + j * CONFIG.TILE_SIZE, CONFIG.TILE_SIZE, CONFIG.TILE_SIZE);
+					//g.DrawImage(Image.FromFile(@"Resources\Sprites\"+map.legend[s.Substring (i, 1)]), position.X + i * CONFIG.TILE_SIZE, position.Y + j * CONFIG.TILE_SIZE, CONFIG.TILE_SIZE, CONFIG.TILE_SIZE);
+					g.DrawImage(gd.rm.getImage(s.Substring (i, 1)), position.X + i * CONFIG.TILE_SIZE, position.Y + j * CONFIG.TILE_SIZE, CONFIG.TILE_SIZE, CONFIG.TILE_SIZE);
                 }
 
 				j++;

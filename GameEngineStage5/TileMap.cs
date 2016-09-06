@@ -11,7 +11,7 @@ namespace GameEngineStage5
         //private Logger log;
 
         public List<string> map;
-        public Hashtable legend;
+		public Hashtable legend;
 
         /// <summary>
         /// Ширина карты в тайлах

@@ -8,7 +8,7 @@ namespace GameEngineStage5
 		/// <summary>
 		/// Уникальный идентификатор монстра в пределах текущего этапа
 		/// </summary>
-		private int id = 0;
+		private int monster_id = 0;
 		/// <summary>
 		/// Скорость монстра.
 		/// </summary>
@@ -48,7 +48,7 @@ namespace GameEngineStage5
 		// Текущее положение монстра на пути
 		private int path_pos = 0;
 
-		private GameData gd;
+		//private GameData gd;
 
 		// Позиция монстра в мировых координатах (для плавного перемещения между клетками)
 		private PointF startPos;

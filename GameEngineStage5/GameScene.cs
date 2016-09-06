@@ -23,6 +23,13 @@ namespace GameEngineStage5
         {
             base.Init();
 
+			// Загрузить ресурсы, необходимые для данной сцены
+			gd.rm.clear();
+			gd.rm.addElementAsImage ("#", @"Resources\Sprites\tile_wall.png");
+			gd.rm.addElementAsImage (".", @"Resources\Sprites\tile_space.png");
+			gd.rm.addElementAsImage ("*", @"Resources\Sprites\tile_path.png");
+			gd.rm.addElementAsImage ("+", @"Resources\Sprites\tile_busy.png");
+
 			// Создать объект - тайловую карту
 			gd.map = new TileMap ();
 
