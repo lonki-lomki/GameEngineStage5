@@ -79,6 +79,11 @@ namespace GameEngineStage5
 
 			gd.sceneChange = true;
 
+            // Проверка загрузки тайловой карты Tiled
+            //Map map;
+            //map = Map.Load(@"Resources\Levels\MapTest.tmx");
+            //map.ObjectGroups["events"].Objects["hero"].Texture = null;
+
 
         }
 

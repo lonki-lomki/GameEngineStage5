@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="TiledParser.cs" />
     <Compile Include="TileMap.cs" />
     <Compile Include="TileMapObject.cs" />
     <Compile Include="Vector.cs" />
@@ -102,6 +103,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Monster.cs" />
+    <Content Include="Resources\Levels\MapTest.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -116,6 +120,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Levels\Level_001.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sprites\tiles.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Sprites\tile_busy.png">
