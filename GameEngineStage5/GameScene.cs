@@ -30,15 +30,17 @@ namespace GameEngineStage5
 			gd.rm.addElementAsImage ("*", @"Resources\Sprites\tile_path.png");
 			gd.rm.addElementAsImage ("+", @"Resources\Sprites\tile_busy.png");
 
-			// Создать объект - тайловую карту
-			gd.map = new TileMap ();
+			// Создать объект - тайловую карту и загрузить данные из файла
+			gd.map = Map.Load(@"Resources\Levels\MapTest.tmx");
 
+            /*
             // Открыть файл с описанием этапа
             FileStream fileStrem = new FileStream(@"Resources\Levels\level_001.txt", FileMode.Open, FileAccess.Read);
             // Чтение тайловой карты (результат записывается в переменные map и legend данного экземпляра)
             gd.map.LoadMap(fileStrem);
+            */
             // Создать объект для отображения карты
-            TileMapObject tmo = new TileMapObject("TileMapObject", gd, gd.map);
+            TiledMapObject tmo = new TiledMapObject("TiledMapObject", gd, gd.map);
             // Координаты игрового поля на экране
 			tmo.setPosition(20.0f, 50.0f);
 			// Другие параметры
