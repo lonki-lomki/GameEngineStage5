@@ -45,8 +45,8 @@ namespace GameEngineStage5
         public int Margin;
         public Dictionary<int, TilePropertyList> TileProperties = new Dictionary<int, TilePropertyList>();
         public string Image;
-        protected Image _Texture;
-        protected int _TexWidth, _TexHeight;
+        //protected Image _Texture;
+        //protected int _TexWidth, _TexHeight;
 
         internal static Tileset Load(XmlReader reader)
         {
@@ -112,6 +112,7 @@ namespace GameEngineStage5
             return result;
         }
 
+        /*
         public Image Texture
         {
             get
@@ -125,7 +126,8 @@ namespace GameEngineStage5
                 _TexHeight = value.Height;
             }
         }
-
+        */
+        /*
         internal bool MapTileToRect(int index, ref Rectangle rect)
         {
             index -= FirstTileID;
@@ -147,6 +149,7 @@ namespace GameEngineStage5
             rect.Height = TileHeight;
             return true;
         }
+        */
     }
 
     public class Layer
@@ -346,6 +349,7 @@ namespace GameEngineStage5
             return Tiles[index];
         }
 
+        /*
         protected void BuildTileInfoCache(IList<Tileset> tilesets)
         {
             Rectangle rect = new Rectangle();
@@ -369,7 +373,7 @@ namespace GameEngineStage5
 
             _TileInfoCache = cache.ToArray();
         }
-
+        */
         
     }
 
