@@ -16,12 +16,12 @@ namespace GameEngineStage5
         private Image image;
 
         /// <summary>
-        /// Ширина листа спрайтов (в спрайтах)
+        /// Ширина одного спрайта
         /// </summary>
         private int tw;
 
         /// <summary>
-        /// Высота листа спрайтов (в спрайтах)
+        /// Высота одного спрайта
         /// </summary>
         private int th;
 
@@ -35,6 +35,19 @@ namespace GameEngineStage5
         /// </summary>
         private int margin;
 
+        /// <summary>
+        /// Размер листа спрайтов
+        /// </summary>
+        private Size size;
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="image">изображение матрицы спрайтов</param>
+        /// <param name="tw">ширина одного спрайта</param>
+        /// <param name="th">высота одного спрайта</param>
+        /// <param name="spacing">промежуток между спрайтами</param>
+        /// <param name="margin">ширина границы вокруг спрайта</param>
         public SpriteSheet(Image image, int tw, int th, int spacing, int margin)
         {
             this.image = image;
@@ -42,6 +55,7 @@ namespace GameEngineStage5
             this.th = th;
             this.spacing = spacing;
             this.margin = margin;
+            this.size = image.Size;
         }
 
         /// <summary>
@@ -50,7 +64,7 @@ namespace GameEngineStage5
         /// <returns>количество спрайтов в строке</returns>
         public int getHorizontalCount()
         {
-            return tw;
+            return size.Width / (tw + spacing + margin * 2);
         }
 
         /// <summary>
@@ -59,7 +73,7 @@ namespace GameEngineStage5
         /// <returns>количество спрайтов по высоте</returns>
         public int getVerticalCount()
         {
-            return th;
+            return size.Height / (th + spacing + margin * 2);
         }
 
         /// <summary>
@@ -70,10 +84,31 @@ namespace GameEngineStage5
         /// <returns>изображение спрайта</returns>
         public Image getSprite(int x, int y)
         {
+            // Проверить корректность координат
+            if (x >= getHorizontalCount() || y >= getVerticalCount())
+            {
+                return null;
+            }
+
+            // Вычислить параметры прямоугольника отсечения
+            int crop_x;
+            int crop_y;
+
+
             // TODO: сделать!!!
             // http://stackoverflow.com/questions/734930/how-to-crop-an-image-using-c
             //Image sprite = Image.
-            return null;
+
+            // TODO: Rectangle cropRect = new Rectangle(0*x, 0*y, tw, th);
+
+            Bitmap src = new Bitmap(image);
+            Bitmap target = new Bitmap(tw, th);
+            using (Graphics g = Graphics.FromImage(target))
+            {
+                g.DrawImage(src, new Rectangle(0, 0, tw, th), cropRect, GraphicsUnit.Pixel);
+            }
+
+            return target as Image;
         }
     }
 }
