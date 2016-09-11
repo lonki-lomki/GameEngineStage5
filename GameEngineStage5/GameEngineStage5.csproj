@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="SpriteSheet.cs" />
     <Compile Include="TiledMapObject.cs" />
     <Compile Include="TiledParser.cs" />
     <Compile Include="TileMap.cs" />
