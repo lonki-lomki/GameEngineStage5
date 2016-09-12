@@ -29,9 +29,10 @@ namespace GameEngineStage5
 			gd.rm.addElementAsImage (".", @"Resources\Sprites\tile_space.png");
 			gd.rm.addElementAsImage ("*", @"Resources\Sprites\tile_path.png");
 			gd.rm.addElementAsImage ("+", @"Resources\Sprites\tile_busy.png");
+            gd.rm.addElementAsImage ("tiles.png", @"Resources\Sprites\tiles.png");
 
-			// Создать объект - тайловую карту и загрузить данные из файла
-			gd.map = Map.Load(@"Resources\Levels\MapTest.tmx");
+            // Создать объект - тайловую карту и загрузить данные из файла
+            gd.map = Map.Load(@"Resources\Levels\MapTest.tmx");
 
             /*
             // Открыть файл с описанием этапа
@@ -48,6 +49,9 @@ namespace GameEngineStage5
 
 			// Добавить объект на сцену
 			objects.Add(tmo);
+
+            // Создать объект - карту спрайтов
+            gd.ss = new SpriteSheet(gd.rm.getImage("tiles.png"), 32, 32, 0, 0);
 
         }
 

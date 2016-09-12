@@ -90,16 +90,16 @@ namespace GameEngineStage5
                 return null;
             }
 
-            // Вычислить параметры прямоугольника отсечения
-            int crop_x;
-            int crop_y;
+            // Вычислить координаты левого верхнего угла прямоугольника отсечения
+            int crop_x = (tw + margin * 2 + spacing) * x;
+            int crop_y = (th + margin * 2 + spacing) * y;
 
 
             // TODO: сделать!!!
             // http://stackoverflow.com/questions/734930/how-to-crop-an-image-using-c
             //Image sprite = Image.
 
-            // TODO: Rectangle cropRect = new Rectangle(0*x, 0*y, tw, th);
+            Rectangle cropRect = new Rectangle(crop_x, crop_y, tw, th);
 
             Bitmap src = new Bitmap(image);
             Bitmap target = new Bitmap(tw, th);
@@ -109,6 +109,24 @@ namespace GameEngineStage5
             }
 
             return target as Image;
+        }
+
+        /// <summary>
+        /// Получить ширину одного тайла
+        /// </summary>
+        /// <returns>ширина одного тайла</returns>
+        public int getTileWidth()
+        {
+            return tw;
+        }
+
+        /// <summary>
+        /// Получить высоту одного тайла
+        /// </summary>
+        /// <returns>высота одного тайла</returns>
+        public int getTileHeight()
+        {
+            return th;
         }
     }
 }

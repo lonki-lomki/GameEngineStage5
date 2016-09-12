@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="CONFIG.cs" />
     <Compile Include="Entity.cs" />

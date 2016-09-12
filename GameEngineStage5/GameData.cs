@@ -48,6 +48,8 @@ namespace GameEngineStage5
 
         //public PointCollider pc2;
 
+        public SpriteSheet ss;
+
 
         private static GameData instance;
 

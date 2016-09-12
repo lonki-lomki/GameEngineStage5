@@ -55,7 +55,8 @@ namespace GameEngineStage5
                     int tileCode = map.Layers["Layer 1"].Tiles[i + j * map.Layers["Layer 1"].Width];
                     if (tileCode > 0)
                     {
-                        g.DrawString("" + tileCode, new Font("Arial", 12), Brushes.Black, position.X + i * 14, position.Y + j * 14);
+                        //g.DrawString("" + tileCode, new Font("Arial", 12), Brushes.Black, position.X + i * 14, position.Y + j * 14);
+                        g.DrawImage(gd.ss.getSprite(tileCode-1, 0), position.X + i * gd.ss.getTileWidth(), position.Y + j * gd.ss.getTileHeight(), gd.ss.getTileWidth(), gd.ss.getTileHeight());
                     }
                 }
             }
