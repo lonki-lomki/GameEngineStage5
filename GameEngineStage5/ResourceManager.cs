@@ -80,6 +80,33 @@ namespace GameEngineStage5
             }
         }
 
+        public void addElementAsImage(string id, Image image)
+        {
+            // Проверка корректности входных данных
+            if (image == null)
+            {
+                return;
+            }
+
+            // Проверить наличие изображения с таким идентификатором в хранилище
+            if (imageMap.ContainsKey(id) == true)
+            {
+                return;
+            }
+
+            // Проверка наличия изображения в кеше
+            if (imageMapCache.ContainsKey(id) == true)
+            {
+                // Взять изображение из кеша
+                imageMap.Add(id, imageMapCache[id]);
+            }
+            else
+            {
+                // В кеше нет такого изображения - заносим в хранилище
+                imageMap.Add(id, image);
+            }
+        }
+
         /// <summary>
         /// Получить изображение из кеша
         /// </summary>

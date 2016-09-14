@@ -45,6 +45,8 @@ namespace GameEngineStage5
         public int Margin;
         public Dictionary<int, TilePropertyList> TileProperties = new Dictionary<int, TilePropertyList>();
         public string Image;
+        public int ImageWidth;
+        public int ImageHeight;
         //protected Image _Texture;
         //protected int _TexWidth, _TexHeight;
 
@@ -72,6 +74,8 @@ namespace GameEngineStage5
                         {
                             case "image":
                                 result.Image = reader.GetAttribute("source");
+                                result.ImageWidth = int.Parse(reader.GetAttribute("width"));
+                                result.ImageHeight = int.Parse(reader.GetAttribute("height"));
                                 break;
                             case "tile":
                                 currentTileId = int.Parse(reader.GetAttribute("id"));

@@ -44,8 +44,6 @@ namespace GameEngineStage5
 
             // Имя файла с тайлами
             int ccc = map.Tilesets.Count;
-            // TODO: загрузить тайлы, чтобы был доступ к ним по индексу
-            // TODO: как быть, если наборов тайлов несколько? Как вести нумерацию?
 
             // Цикл по строкам
             for (int j  = 0; j < map.Layers["Layer 1"].Height; j++)
@@ -56,7 +54,8 @@ namespace GameEngineStage5
                     if (tileCode > 0)
                     {
                         //g.DrawString("" + tileCode, new Font("Arial", 12), Brushes.Black, position.X + i * 14, position.Y + j * 14);
-                        g.DrawImage(gd.ss.getSprite(tileCode-1, 0), position.X + i * gd.ss.getTileWidth(), position.Y + j * gd.ss.getTileHeight(), gd.ss.getTileWidth(), gd.ss.getTileHeight());
+                        //g.DrawImage(gd.ss.getSprite(tileCode-1, 0), position.X + i * gd.ss.getTileWidth(), position.Y + j * gd.ss.getTileHeight(), gd.ss.getTileWidth(), gd.ss.getTileHeight());
+                        g.DrawImage(gd.rm.getImage("tileset-" + tileCode), position.X + i * gd.ss.getTileWidth(), position.Y + j * gd.ss.getTileHeight(), gd.ss.getTileWidth(), gd.ss.getTileHeight());
                     }
                 }
             }

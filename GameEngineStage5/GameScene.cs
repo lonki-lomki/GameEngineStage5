@@ -29,10 +29,33 @@ namespace GameEngineStage5
 			gd.rm.addElementAsImage (".", @"Resources\Sprites\tile_space.png");
 			gd.rm.addElementAsImage ("*", @"Resources\Sprites\tile_path.png");
 			gd.rm.addElementAsImage ("+", @"Resources\Sprites\tile_busy.png");
-            gd.rm.addElementAsImage ("tiles.png", @"Resources\Sprites\tiles.png");
 
             // Создать объект - тайловую карту и загрузить данные из файла
             gd.map = Map.Load(@"Resources\Levels\MapTest.tmx");
+
+            // Загрузить отдельные спрайты в менеджер ресурсов как самостоятельные изображения (для ускорения отображения)
+            foreach (Tileset ts in gd.map.Tilesets.Values)
+            {
+                int tileCount = ts.FirstTileID;
+                // Загрузить базовое изображение
+                gd.rm.addElementAsImage(ts.Image, @"Resources\Sprites\" + ts.Image);
+
+                // Создать объект - карту спрайтов
+                gd.ss = new SpriteSheet(gd.rm.getImage(ts.Image), ts.TileWidth, ts.TileHeight, ts.Spacing, ts.Margin);
+
+                // Цикл по спрайтам внутри матрицы спрайтов
+                for (int j = 0; j < ts.ImageHeight/ts.TileHeight; j++)
+                {
+                    for (int i = 0; i < ts.ImageWidth/ts.TileWidth; i++)
+                    {
+                        // Добавить этот спрайт в хранилище и наименованием tileset-<порядковый номер спрайта>
+                        // TODO: как быть, если наборов тайлов несколько? Как вести нумерацию?
+                        gd.rm.addElementAsImage("tileset-" + tileCount, gd.ss.getSprite(i, j));
+                        tileCount++;
+                    }
+                }
+            }
+
 
             /*
             // Открыть файл с описанием этапа
@@ -50,8 +73,6 @@ namespace GameEngineStage5
 			// Добавить объект на сцену
 			objects.Add(tmo);
 
-            // Создать объект - карту спрайтов
-            gd.ss = new SpriteSheet(gd.rm.getImage("tiles.png"), 32, 32, 0, 0);
 
         }
 
