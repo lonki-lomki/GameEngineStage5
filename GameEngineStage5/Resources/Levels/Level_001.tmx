@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="18" height="13" tilewidth="32" tileheight="32" nextobjectid="5">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="8">
+  <image source="tiles.png" width="256" height="32"/>
+ </tileset>
+ <layer name="Layer 1" width="18" height="13">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC62TMQ4AMAgC7UD//+Suhohi0oHFpCdFRUTggy7pDIKo5XrFqd45HMcT92CO8pR7VBmAmMzp/qw4jp8tR2nDcTXl43rb+Jl2QM3dybzb5+5m3Pt6uJ+TB6gDAAA=
+  </data>
+ </layer>
+ <objectgroup name="Path">
+  <object id="2" name="Path" x="14" y="46">
+   <polyline points="0,0 96,0 97,63 129,64 130,191 319,192 321,100 447,100 447,253 225,257 226,353"/>
+  </object>
+ </objectgroup>
+</map>

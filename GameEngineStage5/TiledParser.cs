@@ -486,6 +486,7 @@ namespace GameEngineStage5
 
         public string Name, Image;
         public int Width, Height, X, Y;
+        public string Points;
 
         protected Image _Texture;
         protected int _TexWidth, _TexHeight;
@@ -561,6 +562,10 @@ namespace GameEngineStage5
                         if (reader.Name == "image")
                         {
                             result.Image = reader.GetAttribute("source");
+                        }
+                        if (reader.Name == "polyline")
+                        {
+                            result.Points = reader.GetAttribute("points");
                         }
 
                         break;

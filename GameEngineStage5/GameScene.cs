@@ -31,7 +31,7 @@ namespace GameEngineStage5
 			gd.rm.addElementAsImage ("+", @"Resources\Sprites\tile_busy.png");
 
             // Создать объект - тайловую карту и загрузить данные из файла
-            gd.map = Map.Load(@"Resources\Levels\MapTest.tmx");
+            gd.map = Map.Load(@"Resources\Levels\Level_001.tmx");
 
             // Загрузить отдельные спрайты в менеджер ресурсов как самостоятельные изображения (для ускорения отображения)
             foreach (Tileset ts in gd.map.Tilesets.Values)
@@ -55,6 +55,15 @@ namespace GameEngineStage5
                     }
                 }
             }
+
+            // Загрузить путь, по которому движутся враги
+            // Пример строки: "0,0 96,0 97,63 129,64 130,191 319,192 321,100 447,100 447,253 225,257 226,353"
+            // набор пиксельных координат Х и У относительно координаты левого верхнего угла объекта.
+            string path = gd.map.ObjectGroups["Path"].Objects["Path"].Points;
+            int path_x = gd.map.ObjectGroups["Path"].Objects["Path"].X;
+            int path_y = gd.map.ObjectGroups["Path"].Objects["Path"].Y;
+            // Массив координат точек ломаной линии
+            string[] points = path.Split(' ');
 
 
             /*
