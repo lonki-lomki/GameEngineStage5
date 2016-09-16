@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -64,6 +65,13 @@ namespace GameEngineStage5
             int path_y = gd.map.ObjectGroups["Path"].Objects["Path"].Y;
             // Массив координат точек ломаной линии
             string[] points = path.Split(' ');
+            gd.path = new List<PointF>();
+            // Занести данные в массив точек
+            for (int i = 0; i < points.Length; i++)
+            {
+                string[] arr = points[i].Split(',');
+                gd.path.Add(new PointF(float.Parse(arr[0]), float.Parse(arr[1])));
+            }
 
 
             /*

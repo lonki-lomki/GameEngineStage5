@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 
 namespace GameEngineStage5
@@ -49,6 +51,8 @@ namespace GameEngineStage5
         //public PointCollider pc2;
 
         public SpriteSheet ss;
+
+        public List<PointF> path;   // Набор координат точек, из которых состоит путь
 
 
         private static GameData instance;
