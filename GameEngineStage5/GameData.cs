@@ -40,6 +40,8 @@ namespace GameEngineStage5
 
 		public bool sceneChange = false;
 
+        public int curMonsterNumber = 1;    // Номер текущего монстра (для уникальной нумерации монстров)
+
         //public Player player;
 
         //public Landscape landscape;
@@ -78,6 +80,48 @@ namespace GameEngineStage5
         /// </summary>
         public void Init()
         {
+        }
+
+        /// <summary>
+        /// Получить расстояние между двумя точками
+        /// </summary>
+        /// <param name="p1">первая точка</param>
+        /// <param name="p2">вторая точка</param>
+        /// <returns>расстояние</returns>
+        public float distance(PointF p1, PointF p2)
+        {
+            float dX = p2.X - p1.X;
+            float dY = p2.Y - p1.Y;
+            return (float)Math.Sqrt(dX * dX + dY * dY);
+        }
+
+        /// <summary>
+        /// Определение угла поворота отрезка между данными точками
+        /// </summary>
+        /// <param name="p1">первая точка</param>
+        /// <param name="p2">вторая точка</param>
+        /// <returns>угол поворота в градусах</returns>
+        public float getAngle(PointF p1, PointF p2)
+        {
+            double angle_rad = Math.Atan((p2.Y - p1.Y) / (p2.X - p1.X));
+            return (float)(angle_rad * 180 / Math.PI);
+        }
+
+        /// <summary>
+        /// Плавное движение по отрезку между двумя точками
+        /// </summary>
+        /// <param name="p1">стартовая точка</param>
+        /// <param name="p2">финишная точка</param>
+        /// <param name="percent">процент</param>
+        /// <returns>позиция на отрезке, соответствующая проценту</returns>
+        public PointF lerp(PointF p1, PointF p2, float percent)
+        {
+            // TODO: это упрощенная реализация. Переделать!!!!
+            if (percent < 0.5)
+            {
+                return p1;
+            }
+            return p2;
         }
     }
 

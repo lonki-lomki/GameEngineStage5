@@ -33,14 +33,14 @@ namespace GameEngineStage5
 		/// </summary>
 		private bool lastInWave = false;
 
-		// Текущая тайловая позиция монстра
-		private int tileCurPos;
+		// Индекс текущей позиции монстра в нумерации узлов пути
+		private int curPathPos;
 
 		// Следующая тайловая позиция монстра
 		private int tileNextPos;
 
-		// Счётчик времени
-		private float time_count = 0.0f;
+        // Счётчик времени движения монстра по отрезку пути
+        private int timeCounter = 0;
 
 		// Путь, по которому идёт монстр
 		private int[] path = null;
@@ -62,16 +62,84 @@ namespace GameEngineStage5
 
 		private bool isDead = false;	// Флаг, показывающий, что данны монстр уже уничтожен
 
-		public Monster ()
+        private GameData gd;
+
+		public Monster (float speed, float hp, float damage, float exp, bool last)
 		{
+            this.speed = speed;
+            this.hp = hp;
+            this.damage = damage;
+            this.exp = exp;
+            lastInWave = last;
+
+            // Поличить объект с игровыми данными
+            gd = GameData.Instance;
+
+            // Присвоить монстру уникальный идентификатор
+            monster_id = gd.curMonsterNumber++;
+
+            // Ставим монстра в первую точку пути
+            curPathPos = 0;
+            // Получить координаты первого отрезка пути
+            startPos = gd.path[curPathPos];
+            endPos = gd.path[curPathPos + 1];
+            // Расстояние между точками
+            distance = gd.distance(startPos, endPos);
+            // Определить угол поаорота спрайта
+            angle = gd.getAngle(startPos, endPos);
 		}
 
+        public override void update(int delta)
+        {
+            // base.update(delta); - у нас не физический мир, пишем свою функцию движения
 
-		/// <summary>
-		/// Получить флаг последнего монстра в волне
-		/// </summary>
-		/// <returns><c>true</c>, если монстр последний в волне, иначе <c>false</c></returns>
-		public bool isLastInWave()
+            // Выход, если монстр уже уничтожен
+            if (isDead == true)
+            {
+                return;
+            }
+
+            // Расчет нового положения монстра
+            timeCounter += delta; // TODO: * gd.gameSpeed;
+
+            // Сравнить текущее время движения по отрезку с эталонным временем
+            if (timeCounter >= distance/speed)
+            {
+                // Монстру пора переходить на следующий отрезок пути
+                timeCounter -= (int) (distance / speed);
+
+                if (curPathPos == gd.path.Count - 2)
+                {
+                    // Дошли до финиша
+                    // Вызвать метод уничтожения монстра и нанесения урона игроку
+                    OnFinish();
+                    return;
+                }
+                else
+                {
+                    // Переходим к следующему отрезку пути
+                    curPathPos++;
+                }
+                // Настройка переметров для движения по новому отрезку пути
+                startPos = gd.path[curPathPos];
+                endPos   = gd.path[curPathPos + 1];
+                distance = gd.distance(startPos, endPos);
+                angle    = gd.getAngle(startPos, endPos);
+            }
+            else
+            {
+                // TODO: продолжение движения по текущему отрезку пути
+                // необходимо вычислить позицию на отрезке пути по проценту (от 0% - старт до 100% - финиш)
+                position = gd.lerp(startPos, endPos, timeCounter/(distance/speed));
+            }
+        }
+
+
+        /// <summary>
+        /// Получить флаг последнего монстра в волне
+        /// </summary>
+        /// <returns><c>true</c>, если монстр последний в волне, иначе <c>false</c></returns>
+        public bool isLastInWave()
 		{
 			return this.lastInWave;
 		}
