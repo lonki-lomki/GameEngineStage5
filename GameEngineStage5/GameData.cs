@@ -103,8 +103,31 @@ namespace GameEngineStage5
         /// <returns>угол поворота в градусах</returns>
         public float getAngle(PointF p1, PointF p2)
         {
-            double angle_rad = Math.Atan((p2.Y - p1.Y) / (p2.X - p1.X));
-            return (float)(angle_rad * 180 / Math.PI);
+            // TODO: ошибка при вычислении угла 180 градусов (в минус по оси Х)
+            // 447,255 224,255 
+
+            float dX = p2.X - p1.X;
+            float dY = p2.Y - p1.Y;
+
+            // Для корректировки результата необходимо разделить обработку по направлению по оси Х
+            if (dX >= 0)
+            {
+                // Углы от -90 до 90. Обрабатываем без корректировки
+                return (float)(Math.Atan(dY / dX) * 180 / Math.PI);
+            }
+            else
+            {
+                // Углы от -90 до -180 и от 90 до 180. Требуется корректировка.
+                if (dY >= 0)
+                {
+                    // Углы от 90 до 180
+                    return 180.0f - (float)(Math.Atan(dY / (0 - dX)) * 180 / Math.PI);
+                }
+                else
+                {
+                    return (float)(Math.Atan(dY / (0 - dX)) * 180 / Math.PI) + 180.0f;
+                }
+            }
         }
 
         /// <summary>
@@ -116,12 +139,9 @@ namespace GameEngineStage5
         /// <returns>позиция на отрезке, соответствующая проценту</returns>
         public PointF lerp(PointF p1, PointF p2, float percent)
         {
-            // TODO: это упрощенная реализация. Переделать!!!!
-            if (percent < 0.5)
-            {
-                return p1;
-            }
-            return p2;
+            float dX = p2.X - p1.X;
+            float dY = p2.Y - p1.Y;
+            return new PointF(p1.X + dX * percent, p1.Y + dY * percent);
         }
     }
 

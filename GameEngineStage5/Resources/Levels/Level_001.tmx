@@ -9,8 +9,8 @@
   </data>
  </layer>
  <objectgroup name="Path">
-  <object id="2" name="Path" x="14" y="46">
-   <polyline points="0,0 96,0 96,63 129,63 129,191 319,191 319,100 447,100 447,253 225,253 225,353"/>
+  <object id="2" name="Path" x="2" y="35">
+   <polyline points="0,0 96,0 96,63 129,63 129,191 319,191 319,94 447,94 447,255 224,255 224,349"/>
   </object>
  </objectgroup>
 </map>

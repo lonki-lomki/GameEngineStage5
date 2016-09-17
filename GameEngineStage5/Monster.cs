@@ -36,19 +36,8 @@ namespace GameEngineStage5
 		// Индекс текущей позиции монстра в нумерации узлов пути
 		private int curPathPos;
 
-		// Следующая тайловая позиция монстра
-		private int tileNextPos;
-
         // Счётчик времени движения монстра по отрезку пути
         private int timeCounter = 0;
-
-		// Путь, по которому идёт монстр
-		private int[] path = null;
-
-		// Текущее положение монстра на пути
-		private int path_pos = 0;
-
-		//private GameData gd;
 
 		// Позиция монстра в мировых координатах (для плавного перемещения между клетками)
 		private PointF startPos;
@@ -57,14 +46,9 @@ namespace GameEngineStage5
 		// Длина текущего отрезка, по которому движется монстр
 		private float distance;
 
-		// Угол поворота спрайта по направлению движения
-		private float angle;
-
 		private bool isDead = false;	// Флаг, показывающий, что данны монстр уже уничтожен
 
-        private GameData gd;
-
-		public Monster (float speed, float hp, float damage, float exp, bool last)
+        public Monster (float speed, float hp, float damage, float exp, bool last)
 		{
             this.speed = speed;
             this.hp = hp;
@@ -87,6 +71,9 @@ namespace GameEngineStage5
             distance = gd.distance(startPos, endPos);
             // Определить угол поаорота спрайта
             angle = gd.getAngle(startPos, endPos);
+            //gd.log.write("angle:" + angle);
+
+            position = startPos;
 		}
 
         public override void update(int delta)
@@ -125,13 +112,19 @@ namespace GameEngineStage5
                 endPos   = gd.path[curPathPos + 1];
                 distance = gd.distance(startPos, endPos);
                 angle    = gd.getAngle(startPos, endPos);
+                //gd.log.write("angle:" + angle);
             }
             else
             {
-                // TODO: продолжение движения по текущему отрезку пути
+                // продолжение движения по текущему отрезку пути
                 // необходимо вычислить позицию на отрезке пути по проценту (от 0% - старт до 100% - финиш)
                 position = gd.lerp(startPos, endPos, timeCounter/(distance/speed));
             }
+        }
+
+        public override void render(Graphics g)
+        {
+            base.render(g);
         }
 
 

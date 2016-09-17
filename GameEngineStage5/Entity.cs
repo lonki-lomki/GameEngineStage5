@@ -32,7 +32,7 @@ namespace GameEngineStage5
         /// <summary>
         /// Угол поворота объекта в градусах (0 угол - это положительное направление оси Х)
         /// </summary>
-        private float angle = 0.0f;
+        protected float angle = 0.0f;
 
         /// <summary>
         /// Размер объекта

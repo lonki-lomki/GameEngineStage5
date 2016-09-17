@@ -12,7 +12,7 @@ namespace GameEngineStage5
 
         // Координата начала игрового поля
         public static readonly int START_X = 20;
-        public static readonly int START_Y = 8;
+        public static readonly int START_Y = 50;
 
         // Размер тайла
         public static readonly int TILE_SIZE = 32;

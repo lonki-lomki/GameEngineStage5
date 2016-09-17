@@ -70,25 +70,27 @@ namespace GameEngineStage5
             for (int i = 0; i < points.Length; i++)
             {
                 string[] arr = points[i].Split(',');
-                gd.path.Add(new PointF(float.Parse(arr[0]), float.Parse(arr[1])));
+                gd.path.Add(new PointF(float.Parse(arr[0]) + path_x + CONFIG.START_X, float.Parse(arr[1]) + path_y + CONFIG.START_Y));
             }
 
 
-            /*
-            // Открыть файл с описанием этапа
-            FileStream fileStrem = new FileStream(@"Resources\Levels\level_001.txt", FileMode.Open, FileAccess.Read);
-            // Чтение тайловой карты (результат записывается в переменные map и legend данного экземпляра)
-            gd.map.LoadMap(fileStrem);
-            */
             // Создать объект для отображения карты
             TiledMapObject tmo = new TiledMapObject("TiledMapObject", gd, gd.map);
             // Координаты игрового поля на экране
-			tmo.setPosition(20.0f, 50.0f);
+			tmo.setPosition(CONFIG.START_X, CONFIG.START_Y);
 			// Другие параметры
-			tmo.setLayer(2);
+			tmo.setLayer(1);
 
 			// Добавить объект на сцену
 			objects.Add(tmo);
+
+            // Добавить монстра
+            Monster m = new Monster(0.2f, 1.0f, 1.0f, 1.0f, true);
+            m.setLayer(2);
+            m.setImage(gd.rm.getImage("*"));
+            objects.Add(m);
+
+
 
 
         }
