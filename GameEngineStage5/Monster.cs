@@ -143,7 +143,7 @@ namespace GameEngineStage5
 		/// <param name="value"><c>true</c>, если этот монстр последний в волне</param>
 		public void setLastInWave(bool value)
 		{
-			this.lastInWave = value;
+			lastInWave = value;
 		}
 
 		/// <summary>
@@ -152,7 +152,7 @@ namespace GameEngineStage5
 		/// <returns><c>true</c> если монстр не живой; иначе, <c>false</c>.</returns>
 		public bool IsDead()
 		{
-			return this.isDead;
+			return isDead;
 		}
 
 		/// <summary>
@@ -160,8 +160,13 @@ namespace GameEngineStage5
 		/// </summary>
 		public void OnFinish()
 		{
-			
-		}
+            // TODO: !!!! это временно !!!!
+            curPathPos = 0;
+            startPos = gd.path[curPathPos];
+            endPos = gd.path[curPathPos + 1];
+            distance = gd.distance(startPos, endPos);
+            angle = gd.getAngle(startPos, endPos);
+        }
 
 		/// <summary>
 		/// Функция, которая выполняется при попадании в монстра снаряда 

@@ -106,9 +106,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Monster.cs" />
-    <Content Include="Resources\Levels\MapTest.tmx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Levels\Level_001.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -125,7 +122,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\Levels\Level_001.txt">
+    <Content Include="Resources\Sprites\anim1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Sprites\tiles.png">

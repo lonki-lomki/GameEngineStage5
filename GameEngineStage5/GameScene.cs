@@ -90,7 +90,7 @@ namespace GameEngineStage5
             m.setImage(gd.rm.getImage("*"));
             objects.Add(m);
 
-
+            
 
 
         }

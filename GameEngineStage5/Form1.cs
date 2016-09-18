@@ -28,6 +28,8 @@ namespace GameEngineStage5
 
 		private string old_title;	// Оригинальный текст в заголовке окна
 
+        Animation anim;
+
         public Form1()
         {
             InitializeComponent();
@@ -81,6 +83,15 @@ namespace GameEngineStage5
             //map = Map.Load(@"Resources\Levels\MapTest.tmx");
             //map.ObjectGroups["events"].Objects["hero"].Texture = null;
 
+            // Создать набор спрайтов
+            gd.rm.addElementAsImage("anim1", @"Resources\Sprites\anim1.png");
+            SpriteSheet anim1 = new SpriteSheet(gd.rm.getImage("anim1"), 32, 32, 0, 0);
+
+            // Добавить анимацию
+            anim = new Animation(anim1, 0, 0, 7, 0, 100);
+            anim.setLooping(true);
+            anim.start();
+
 
         }
 
@@ -126,6 +137,9 @@ namespace GameEngineStage5
 
             // Обновить игровую сцену
             gd.curScene.Update(delta);
+
+            // TODO: тестирование анимации
+            anim.update(delta);
 
             // Проверить актуальность объектов (убрать со сцены уничтоженные объекты)
             for (int i = gd.world.objects.Count - 1; i >= 0; i--)
@@ -203,6 +217,9 @@ namespace GameEngineStage5
                     }
                 }
             }
+
+            // TODO: тестирование анимации
+            anim.render(g, 600, 100);
 
             // Вывод текстовой информации
             //g.DrawString("Тяга: " + gd.player.getEngPower(), new Font("Arial", 12), Brushes.Black, 20.0f, 10.0f);
