@@ -7,6 +7,8 @@ namespace GameEngineStage5
 {
 
     // TODO: сделать класс, описывающий анимацию (анимированный спрайт)
+    // TODO: сделать поиск пути по A*
+    // TODO: объект-кнопка
 
     public partial class Form1 : Form
     {
