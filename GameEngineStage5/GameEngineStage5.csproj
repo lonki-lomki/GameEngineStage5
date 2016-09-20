@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="CONFIG.cs" />
     <Compile Include="Entity.cs" />
