@@ -22,6 +22,15 @@ namespace GameEngineStage5
         {
             base.Init();
 
+            // Загрузить ресурсы, необходимые для данной сцены
+            gd.rm.clear();
+            gd.rm.addElementAsImage("button", @"Resources\GUI\button.png");
+
+            Button btn = new Button("button1", "button", "Test");
+            // TODO: вывод кнопки на экран
+            !!!
+
+
         }
 
         /// <summary>

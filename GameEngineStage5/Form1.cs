@@ -73,19 +73,16 @@ namespace GameEngineStage5
             //------------------------------------------------------
 
             // Создать стартовую сцену игры
-            GameScene gs = new GameScene(GameData.GameState.Level, gd);
-            gd.curScene = gs;
+            //GameScene gs = new GameScene(GameData.GameState.Level, gd);
+            MainMenuScene scene = new MainMenuScene(GameData.GameState.MainMenu, gd);
+            gd.curScene = scene;
 
 			gd.curScene.Init();
 
 			gd.sceneChange = true;
 
-            // Проверка загрузки тайловой карты Tiled
-            //Map map;
-            //map = Map.Load(@"Resources\Levels\MapTest.tmx");
-            //map.ObjectGroups["events"].Objects["hero"].Texture = null;
-
             // Создать набор спрайтов
+            /*
             gd.rm.addElementAsImage("anim1", @"Resources\Sprites\anim1.png");
             SpriteSheet anim1 = new SpriteSheet(gd.rm.getImage("anim1"), 32, 32, 0, 0);
 
@@ -93,7 +90,7 @@ namespace GameEngineStage5
             anim = new Animation(anim1, 0, 0, 7, 0, 100);
             anim.setLooping(true);
             anim.start();
-
+            */
 
         }
 
