@@ -438,6 +438,15 @@ namespace GameEngineStage5
             //this.size = img.Size;
         }
 
+        /// <summary>
+        /// Получить картинку, которую необходимо отрисовать
+        /// </summary>
+        /// <returns>картинка</returns>
+        virtual public Image getImage()
+        {
+            return img;
+        }
+
         //virtual public void setCollider(PolygonCollider c)
         virtual public void setCollider(Collider c)
         {

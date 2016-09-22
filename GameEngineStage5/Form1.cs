@@ -138,7 +138,7 @@ namespace GameEngineStage5
             gd.curScene.Update(delta);
 
             // TODO: тестирование анимации
-            anim.update(delta);
+            //////anim.update(delta);
 
             // Проверить актуальность объектов (убрать со сцены уничтоженные объекты)
             for (int i = gd.world.objects.Count - 1; i >= 0; i--)
@@ -218,7 +218,7 @@ namespace GameEngineStage5
             }
 
             // TODO: тестирование анимации
-            anim.render(g, 600, 100);
+            //////anim.render(g, 600, 100);
 
             // Вывод текстовой информации
             //g.DrawString("Тяга: " + gd.player.getEngPower(), new Font("Arial", 12), Brushes.Black, 20.0f, 10.0f);

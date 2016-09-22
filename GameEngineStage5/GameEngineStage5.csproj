@@ -108,7 +108,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Monster.cs" />
-    <Content Include="Resources\GUI\button.png" />
+    <Content Include="Resources\GUI\button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Levels\Level_001.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
