@@ -50,11 +50,11 @@ namespace GameEngineStage5
 
         public override void render(Graphics g)
         {
-            // Вывести кнопку и, поверх, надпись
+            // Вывести кнопку и, поверх, надпись с центрованием текста
             g.DrawImage(gd.rm.getImage(style), getPosition().X, getPosition().Y, getSize().Width, getSize().Height);
-            // TODO: надпись вывести по центру кнопки!!!
-            !!!!
-            g.DrawString(label, new Font("Arial", 15), Brushes.Yellow, getPosition());
+            Font font = new Font("Arial", 15);
+            SizeF strSize = g.MeasureString(label, font);
+            g.DrawString(label, font, Brushes.Yellow, getPosition().X + getSize().Width / 2 - strSize.Width / 2, getPosition().Y + getSize().Height / 2 - strSize.Height / 2);
         }
 
 
