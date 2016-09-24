@@ -6,9 +6,9 @@ using System.Windows.Forms;
 namespace GameEngineStage5
 {
 
-    // TODO: сделать класс, описывающий анимацию (анимированный спрайт)
     // TODO: сделать поиск пути по A*
-    // TODO: объект-кнопка
+    // TODO: хранение и чтение данных об этапе в файле тайловой карты (.tmx)
+    // TODO: построение карты проходимости (для применения алгоритма поиска пути)
 
     public partial class Form1 : Form
     {
@@ -109,6 +109,12 @@ namespace GameEngineStage5
             tickCount = Environment.TickCount;
 
             delta = (int)(tickCount - saveTickCount);
+
+            if (delta == 0)
+            {
+                // А вдруг!
+                return;
+            }
 
 			// Вычислить FPS
 			float fps = 1000 / delta;

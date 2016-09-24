@@ -30,9 +30,9 @@ namespace GameEngineStage5
             btn.setPosition(100.0f, 100.0f);
             btn.setLayer(2);
             btn.AddCallBack(
-                delegate(Entity ent)
+                delegate(Entity ent, string eType)
                 {
-                    gd.log.write("Button "+ent.getId()+" clicked!");
+                    gd.log.write("Button "+ent.getId()+" clicked! ("+eType+")");
                 }
                );
             objects.Add(btn);

@@ -21,7 +21,7 @@ namespace GameEngineStage5
         /// <summary>
         /// Объявление класса-делегата для указания функции обработки события нажатия кнопки
         /// </summary>
-        public delegate void ButtonAction(Entity ent);
+        public delegate void ButtonAction(Entity ent, string eType);
 
         /// <summary>
         /// Внешняя функция, которая вызывается при нажатии кнопки
@@ -65,11 +65,25 @@ namespace GameEngineStage5
                 if (args.Y >= pos.Y && args.Y <= (pos.Y + size.Height))
                 {
                     // Клавиша мыши нажата внутри прямоугольника экранной кнопки - выполняем действие
-                    action(this);
+                    action(this, "LeftMouse");
                 }
             }
         }
 
+        public override void OnRightMouseButtonClick(MouseEventArgs args)
+        {
+            // Проверить нахождение курсора мыши в пределах площади кнопки
+            PointF pos = getPosition();
+            SizeF size = getSize();
+            if (args.X >= pos.X && args.X <= (pos.X + size.Width))
+            {
+                if (args.Y >= pos.Y && args.Y <= (pos.Y + size.Height))
+                {
+                    // Клавиша мыши нажата внутри прямоугольника экранной кнопки - выполняем действие
+                    action(this, "RightMouse");
+                }
+            }
+        }
 
     }
 }
