@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace GameEngineStage5
 {
@@ -23,7 +21,7 @@ namespace GameEngineStage5
         /// <summary>
         /// Объявление класса-делегата для указания функции обработки события нажатия кнопки
         /// </summary>
-        public delegate void ButtonAction();
+        public delegate void ButtonAction(Entity ent);
 
         /// <summary>
         /// Внешняя функция, которая вызывается при нажатии кнопки
@@ -55,6 +53,21 @@ namespace GameEngineStage5
             Font font = new Font("Arial", 15);
             SizeF strSize = g.MeasureString(label, font);
             g.DrawString(label, font, Brushes.Yellow, getPosition().X + getSize().Width / 2 - strSize.Width / 2, getPosition().Y + getSize().Height / 2 - strSize.Height / 2);
+        }
+
+        public override void OnLeftMouseButtonClick(MouseEventArgs args)
+        {
+            // Проверить нахождение курсора мыши в пределах площади кнопки
+            PointF pos = getPosition();
+            SizeF size = getSize();
+            if (args.X >= pos.X && args.X <= (pos.X + size.Width))
+            {
+                if (args.Y >= pos.Y && args.Y <= (pos.Y + size.Height))
+                {
+                    // Клавиша мыши нажата внутри прямоугольника экранной кнопки - выполняем действие
+                    action(this);
+                }
+            }
         }
 
 

@@ -236,8 +236,32 @@ namespace GameEngineStage5
 
         }
 
+        ///////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Обработка событий нажатия клавиши мыши
+        /// </summary>
+        /// <param name="sender">Источник события</param>
+        /// <param name="e">Параметры события</param>
+		///////////////////////////////////////////////////////////////////////
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            // Левая кнопка
+            if (e.Button == MouseButtons.Left)
+            {
+                foreach (Entity ent in gd.world.objects)
+                {
+                    ent.OnLeftMouseButtonClick(e);
+                }
+            }
+
+            // Правая кнопка
+            if (e.Button == MouseButtons.Right)
+            {
+                foreach (Entity ent in gd.world.objects)
+                {
+                    ent.OnRightMouseButtonClick(e);
+                }
+            }
 
         }
     }

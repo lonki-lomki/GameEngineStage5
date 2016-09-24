@@ -29,6 +29,12 @@ namespace GameEngineStage5
             Button btn = new Button("button1", "button", "Test", gd);
             btn.setPosition(100.0f, 100.0f);
             btn.setLayer(2);
+            btn.AddCallBack(
+                delegate(Entity ent)
+                {
+                    gd.log.write("Button "+ent.getId()+" clicked!");
+                }
+               );
             objects.Add(btn);
 
 
