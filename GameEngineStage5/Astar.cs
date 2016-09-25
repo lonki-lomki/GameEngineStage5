@@ -6,6 +6,32 @@ using System.Text;
 namespace GameEngineStage5
 {
     /// <summary>
+    /// Вспомогательный класс, описывающий ячейку пути по тайловой карте
+    /// </summary>
+    public class Cell
+    {
+        /// <summary>
+        /// Координата Х ячейки карты
+        /// </summary>
+        public int X;
+
+        /// <summary>
+        /// Координата У ячейки карты
+        /// </summary>
+        public int Y;
+
+        /// <summary>
+        /// Ссылка на ячейку карты, из которой пришел путь
+        /// </summary>
+        public Cell cameFrom;
+
+        public Cell()
+        {
+
+        }
+    }
+
+    /// <summary>
     /// Класс, реализующий алгоритм поиска пути А*
     /// </summary>
     public class Astar
@@ -18,13 +44,14 @@ namespace GameEngineStage5
 
 
 
-        /**
-         * Функция поиска объекта в массиве (сравнение объектов производится по значению полей x и y)
-         * @param {object} arg_cell объект, который будет искаться в массиве
-         * @param {Array} arg_array массив объектов
-         * @return {boolean} true - если объект найден, false - если объект не найден
-         */
-        private bool foundInArray(Point arg_cell, Point[] arg_array)
+
+        /// <summary>
+        /// Функция поиска объекта в массиве (сравнение объектов производится по значению полей x и y)
+        /// </summary>
+        /// <param name="arg_cell">объект, который будет искаться в массиве</param>
+        /// <param name="arg_array">массив объектов</param>
+        /// <returns>true - если объект найден, false - если объект не найден</returns>
+        private bool foundInArray(Cell arg_cell, Cell[] arg_array)
         {
             // Цикл по объектам в массиве
             for (int index = 0; index < arg_array.Length; index++)
@@ -46,17 +73,20 @@ namespace GameEngineStage5
      * @param {Object} arg_goal объект - конечная ячейка пути
      * @return {Array} массив ячеек, составляющих путь от исходной ячейки к целевой
      */
-        private Object reconstruct_path(Object arg_goal)
+
+        private Cell[] reconstruct_path(Cell arg_goal)
         {
-            var path_map = [];
-            var curr_cell = arg_goal;     // Поиск начинается с конечной ячейки
-                                          // Цикл по ячейкам, составляющим путь
-            while (curr_cell !== undefined && curr_cell !== null)
+            SortedList<int, Cell> path = new SortedList<int, Cell>();
+            int i = 0;
+            Cell curr_cell = arg_goal;     // Поиск начинается с конечной ячейки
+
+            // Цикл по ячейкам, составляющим путь
+            while (curr_cell != null)
             {
-                path_map.push(curr_cell);   // Добавить ячейку в массив
-                curr_cell = curr_cell.came_from;
+                path.Add(i++, new Cell(curr_cell)); // Добавить ячейку в массив
+                curr_cell = curr_cell.cameFrom;
             }
-            return path_map.reverse();
+            return path.reverse();  // ???
         }
 
 
