@@ -29,6 +29,13 @@ namespace GameEngineStage5
         {
 
         }
+
+        public Cell(Cell c)
+        {
+            X = c.X;
+            Y = c.Y;
+            cameFrom = c.cameFrom;
+        }
     }
 
     /// <summary>
@@ -67,26 +74,26 @@ namespace GameEngineStage5
             return false;
         }
 
-        /**
-     * Реконструкция найденного пути. Путь строится в обратном порядке, от конечной
-     * до начальной ячейки (используется поле came_from).
-     * @param {Object} arg_goal объект - конечная ячейка пути
-     * @return {Array} массив ячеек, составляющих путь от исходной ячейки к целевой
-     */
-
-        private Cell[] reconstruct_path(Cell arg_goal)
+        /// <summary>
+        /// Реконструкция найденного пути. Путь строится в обратном порядке, от конечной до начальной ячейки (используется поле cameFrom).
+        /// </summary>
+        /// <param name="arg_goal">конечная ячейка пути</param>
+        /// <returns>список ячеек, составляющих путь от исходной ячейки к целевой</returns>
+        private List<Cell> reconstruct_path(Cell arg_goal)
         {
-            SortedList<int, Cell> path = new SortedList<int, Cell>();
-            int i = 0;
+            List<Cell> path = new List<Cell>();
+            //int i = 0;
             Cell curr_cell = arg_goal;     // Поиск начинается с конечной ячейки
 
             // Цикл по ячейкам, составляющим путь
             while (curr_cell != null)
             {
-                path.Add(i++, new Cell(curr_cell)); // Добавить ячейку в массив
+                path.Add(new Cell(curr_cell)); // Добавить ячейку в массив
                 curr_cell = curr_cell.cameFrom;
             }
-            return path.reverse();  // ???
+            // Поменять порядок элементов списка на обратный
+            path.Reverse();
+            return path;
         }
 
 
