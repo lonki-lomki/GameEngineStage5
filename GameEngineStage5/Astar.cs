@@ -36,6 +36,16 @@ namespace GameEngineStage5
             Y = c.Y;
             cameFrom = c.cameFrom;
         }
+
+        /// <summary>
+        /// Получить индекс данной ячейки в линейном массиве тайловой карты
+        /// </summary>
+        /// <param name="mapWidth">ширина карты (длина одной горизонатльной строки)</param>
+        /// <returns>порядковый номер для данной ячейки</returns>
+        public int getCellID(int mapWidth)
+        {
+            return Y * mapWidth + X;
+        }
     }
 
     /// <summary>
@@ -96,79 +106,48 @@ namespace GameEngineStage5
             return path;
         }
 
-
-        /**
-     * Функция расчёта примерной стоимости данной ячейки относительно расстояния от неё до целевой ячейки
-     * @param {Object} arg_from данная ячейка
-     * @param {Object} arg_to целевая ячейка
-     * @return {Number} расстояние между ячейками по теореме Пифагора
-     */
-        private float heuristic_cost_estimate(Object arg_from, Object arg_to)
+        /// <summary>
+        /// Функция расчёта примерной стоимости данной ячейки относительно расстояния от неё до целевой ячейки
+        /// </summary>
+        /// <param name="arg_from">данная ячейка</param>
+        /// <param name="arg_to">целевая ячейка</param>
+        /// <returns>расстояние между ячейками по теореме Пифагора</returns>
+        private float heuristic_cost_estimate(Cell arg_from, Cell arg_to)
         {
-            return (float)Math.sqrt(Math.pow(arg_to.x - arg_from.x, 2) + Math.pow(arg_to.y - arg_from.y, 2));
+            return (float)Math.Sqrt(Math.Pow(arg_to.X - arg_from.X, 2) + Math.Pow(arg_to.Y - arg_from.Y, 2));
         }
 
-        /**
- * Функция определяет стоимость перемещения между соседними ячейками
- * (в данном случае у нас только 4 равноправных перемещения, поэтому возвращаем одинаковое значение в любом случае)
- * @param {Object} arg_from исходная ячейка
- * @param {Object} arg_to сосед исходной ячейки
- * @return {Number} стоимость перемещения из исходной ячейки в соседнюю
- */
-        private int dist_between(Object arg_from, Object arg_to)
+        /// <summary>
+        /// Функция определяет стоимость перемещения между соседними ячейками
+        /// (в данном случае у нас только 4 равноправных перемещения, поэтому возвращаем одинаковое значение в любом случае)
+        /// </summary>
+        /// <param name="arg_from">исходная ячейка</param>
+        /// <param name="arg_to">сосед исходной ячейки</param>
+        /// <returns>стоимость перемещения из исходной ячейки в соседнюю</returns>
+        private int dist_between(Cell arg_from, Cell arg_to)
         {
             return 10;
         }
 
-        /**
-         * Проверка проходимости выбранной ячейки
-         * @param {Object} arg_cell базовая ячейка, относительно которой проверяется сосед
-         * @param {Object} arg_neig соседняя ячейка, перемещение в которую необходимо проверить
-         * @param {Array} arg_map матрица игрового поля
-         * @param {Array} arg_canMoveElements массив типом ячеек, по которым можно перемещаться
-         * @returns {Boolean} true, если перемещение разрешено, false - если перемещение запрещено
-         */
-        private bool validate_cell(Object arg_cell, Object arg_neig, Object arg_map, Object arg_canMoveElements)
+        /// <summary>
+        /// Проверка проходимости выбранной ячейки
+        /// </summary>
+        /// <param name="arg_cell">базовая ячейка, относительно которой проверяется сосед</param>
+        /// <param name="arg_neig">соседняя ячейка, перемещение в которую необходимо проверить</param>
+        /// <param name="arg_map">объект игрового поля</param>
+        /// <param name="arg_canMoveElements">массив типов ячеек, по которым можно перемещаться</param>
+        /// <returns>true, если перемещение разрешено, false - если перемещение запрещено</returns>
+        private bool validate_cell(Cell arg_cell, Cell arg_neig, Map arg_map, List<int> arg_canMoveElements)
         {
             // Проверить на проходимость текущей ячейки
-            if (arg_map[arg_cell.y][arg_cell.x] in arg_canMoveElements && arg_map[arg_cell.y][arg_cell.x] !== pitIndex
-                    && arg_map[arg_neig.y][arg_neig.x] in arg_canMoveElements && arg_map[arg_neig.y][arg_neig.x] !== pitIndex) {
-                // Дополнительные проверки
-                // Вариант, когда невозможно подняться вверх в воздух, если внизу не лестница
-                if ((arg_cell.y - arg_neig.y) > 0
-                        && arg_map[arg_neig.y][arg_neig.x] in mapAir2
-                        && arg_map[arg_cell.y][arg_cell.x] !== stairsIndex) {
-                    return false;
-                }
-                // Нельзя запрыгнуть на верёвку
-                if ((arg_cell.y - arg_neig.y) > 0
-                        && arg_map[arg_neig.y][arg_neig.x] === lineIndex
-                        && arg_map[arg_cell.y][arg_cell.x] in canMoveElements) {
-                    return false;
-                }
-                // Нельзя запрыгнуть на лестницу
-                if ((arg_cell.y - arg_neig.y) > 0
-                        && arg_map[arg_neig.y][arg_neig.x] === stairsIndex
-                        && arg_map[arg_cell.y][arg_cell.x] in mapAir2) {
-                    return false;
-                }
-                // Нельзя с верёвки подняться на лестницу
-                if ((arg_cell.y - arg_neig.y) > 0
-                        && arg_map[arg_neig.y][arg_neig.x] === stairsIndex
-                        && arg_map[arg_cell.y][arg_cell.x] === lineIndex)
-                {
-                    return false;
-                }
-                // Имитация гравитации
-                if ((arg_cell.x - arg_neig.x) !== 0
-                        && (arg_map[arg_cell.y][arg_cell.x] in mapAir2 && arg_map[arg_cell.y + 1][arg_cell.x] in mapAir2
-                              || arg_map[arg_cell.y][arg_cell.x] in mapAir2 && arg_map[arg_cell.y + 1][arg_cell.x] === lineIndex)) {
-                    return false;
-                }
-                // Дошли сюда - пройти можно
+            if (arg_canMoveElements.Contains(arg_map.Layers["Layer 1"].Tiles[arg_cell.getCellID(arg_map.Width)])
+             && arg_canMoveElements.Contains(arg_map.Layers["Layer 1"].Tiles[arg_neig.getCellID(arg_map.Width)])) {
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         /**
@@ -178,7 +157,7 @@ namespace GameEngineStage5
          * @param {Array} arg_canMoveElements массив типом ячеек, по которым можно перемещаться
          * @returns {Array}
          */
-        private Object neighbor_nodes(Object arg_cell, Map arg_map, Object arg_canMoveElements)
+        private Object neighbor_nodes(Cell arg_cell, Map arg_map, Object arg_canMoveElements)
         {
             var ret = [];
             var width = arg_map[0].length;  // Ширина карты
@@ -186,11 +165,11 @@ namespace GameEngineStage5
                                             // В цикле добавить четыре соседние ячейки
             for (var i = -1; i < 2; i += 2)
             {
-                if ((arg_cell.x + i) >= 0 && (arg_cell.x + i) < width)
+                if ((arg_cell.X + i) >= 0 && (arg_cell.X + i) < width)
                 {
                     ///////ret.push({ x: (arg_cell.x + i), y: arg_cell.y, valid: false});
                 }
-                if ((arg_cell.y + i) >= 0 && (arg_cell.y + i) < heigth) {
+                if ((arg_cell.Y + i) >= 0 && (arg_cell.Y + i) < heigth) {
                     //////ret.push({x:arg_cell.x, y:(arg_cell.y + i), valid:false});
                 }
             }
