@@ -25,6 +25,17 @@ namespace GameEngineStage5
         /// </summary>
         public Cell cameFrom;
 
+        /// <summary>
+        /// Флаг, помечающий ячейку как валидную/невалидную
+        /// </summary>
+        public bool valid;
+
+        public float G;
+
+        public float H;
+
+        public float F;
+
         public Cell()
         {
 
@@ -35,6 +46,14 @@ namespace GameEngineStage5
             X = c.X;
             Y = c.Y;
             cameFrom = c.cameFrom;
+            valid = c.valid;
+        }
+
+        public Cell(int x, int y, bool valid)
+        {
+            X = x;
+            Y = y;
+            this.valid = valid;
         }
 
         /// <summary>
@@ -150,31 +169,33 @@ namespace GameEngineStage5
             }
         }
 
-        /**
-         * Функция формирует массив всех соседей данной ячейки
-         * @param {Object} arg_cell исходная ячейка
-         * @param {Array} arg_map матрица карты, чтобы получить размерность
-         * @param {Array} arg_canMoveElements массив типом ячеек, по которым можно перемещаться
-         * @returns {Array}
-         */
-        private Object neighbor_nodes(Cell arg_cell, Map arg_map, Object arg_canMoveElements)
+        /// <summary>
+        /// Функция формирует массив всех соседей данной ячейки
+        /// </summary>
+        /// <param name="arg_cell">исходная ячейка</param>
+        /// <param name="arg_map">тайловая карта, как источник размеров матрицы</param>
+        /// <param name="arg_canMoveElements">массив типов ячеек, по которым можно перемещаться</param>
+        /// <returns></returns>
+        private List<Cell> neighbor_nodes(Cell arg_cell, Map arg_map, List<int> arg_canMoveElements)
         {
-            var ret = [];
-            var width = arg_map[0].length;  // Ширина карты
-            var heigth = arg_map.length;    // Высота карты
-                                            // В цикле добавить четыре соседние ячейки
-            for (var i = -1; i < 2; i += 2)
+            List<Cell> ret = new List<Cell>();
+            int width = arg_map.Width;      // Ширина карты
+            int heigth = arg_map.Height;    // Высота карты
+
+            // В цикле добавить четыре соседние ячейки
+            for (int i = -1; i < 2; i += 2)
             {
                 if ((arg_cell.X + i) >= 0 && (arg_cell.X + i) < width)
                 {
-                    ///////ret.push({ x: (arg_cell.x + i), y: arg_cell.y, valid: false});
+                    ret.Add(new Cell((arg_cell.X + i), arg_cell.Y, false));
                 }
                 if ((arg_cell.Y + i) >= 0 && (arg_cell.Y + i) < heigth) {
-                    //////ret.push({x:arg_cell.x, y:(arg_cell.y + i), valid:false});
+                    ret.Add(new Cell(arg_cell.X, (arg_cell.Y + i), false));
                 }
             }
-    // Валидация добавленных в массив ячеек
-    for (var idx in ret) {
+            // Валидация добавленных в массив ячеек
+            for (int idx = 0; idx < ret.Count; idx++)
+            {
                 ret[idx].valid = validate_cell(arg_cell, ret[idx], arg_map, arg_canMoveElements);
             }
             return ret;
@@ -189,39 +210,39 @@ namespace GameEngineStage5
         //       arg_sprite_size - текущий размер тайла
         //       arg_canMoveElements - массив типов элементов карты, по которым можно перемещаться
         //       arg_mapAir - массив типов элементов карты, которые представляют собой воздух
-        public Object pathFinderAstar(Map arg_map, Point arg_from, Point arg_to, Object arg_sprite_size, Object arg_canMoveElements, Object arg_mapAir)
+
+
+        public List<Cell> pathFinderAstar(Map arg_map, Point arg_from, Point arg_to, int arg_sprite_size, List<int> arg_canMoveElements, List<int> arg_mapAir)
         {
             // Параметры поиска пути
-            var x1 = Math.round(arg_from.x / arg_sprite_size);
-            var y1 = Math.round(arg_from.y / arg_sprite_size);
-            var x2 = Math.round(arg_to.x / arg_sprite_size);
-            var y2 = Math.round(arg_to.y / arg_sprite_size);
+            int x1 = (int)Math.Round((double)arg_from.X / arg_sprite_size);
+            int y1 = (int)Math.Round((double)arg_from.Y / arg_sprite_size);
+            int x2 = (int)Math.Round((double)arg_to.X / arg_sprite_size);
+            int y2 = (int)Math.Round((double)arg_to.Y / arg_sprite_size);
 
             // Рабочие переменные
-            var closed = [];  // Массив уже обработанных вершин
-            var opened = [];  // Массив вершин, которые еще предстоит обработать
-            var path_map = [];  // Карта пройденных вершин
+            List<Cell> closed = new List<Cell>();   // Массив уже обработанных вершин
+            List<Cell> opened = new List<Cell>();   // Массив вершин, которые еще предстоит обработать
+            List<Cell> path_map = new List<Cell>(); // Карта пройденных вершин
 
             // Объект, описывающий целевую ячейку
-            var goal = { };
-            goal.x = x2;
-            goal.y = y2;
+            Cell goal = new Cell(x2, y2, false);
 
             // Объект, описывающий стартовую ячейку
-            var start = { };
-            start.x = x1;     // Координаты стартовой ячейки
-            start.y = y1;
-            start.g = 0;      // Стоимость перемещения из стартовой ячейки в текущую ячейку (для стартовой ячейки равно 0)
-            start.h = heuristic_cost_estimate(start, goal);    // Эвристическая оценка расстояние до цели
-            start.f = start.g + start.h;  // Стоимость перемещения для ткущей ячейки
-            start.came_from = null;
+            Cell start = new Cell(x1, y1, false);
+            start.G = 0;      // Стоимость перемещения из стартовой ячейки в текущую ячейку (для стартовой ячейки равно 0)
+            start.H = heuristic_cost_estimate(start, goal);    // Эвристическая оценка расстояние до цели
+            start.F = start.G + start.H;  // Стоимость перемещения для ткущей ячейки
+            start.cameFrom = null;
+
             // Заносим стартовую ячейку в массив открытых
-            opened.push(start);
+            opened.Add(start);
 
             // Главный цикл алгоритма - обрабатываем массив opened
-            while (opened.length > 0)
+            while (opened.Count > 0)
             {
                 // Сортируем массив opened по возрастанию значения поля f
+                opened.Sort();
                 opened.sort(function(a, b) {
                     return a.f - b.f;
                 });
