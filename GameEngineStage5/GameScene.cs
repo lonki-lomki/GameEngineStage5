@@ -87,8 +87,15 @@ namespace GameEngineStage5
             m.setImage(gd.rm.getImage("*"));
             objects.Add(m);
 
-            
+            // Проверка алгоритма поиска пути
+            // TODO: Описание проходимых ячеек (читать из файла описания уровня)
+            List<int> canMove = new List<int>();
+            canMove.Add(6);
+            List<int> air = new List<int>();
 
+            Astar astar = new Astar();
+            List<Cell> aStarPath = astar.pathFinderAstar(gd.map, new Point(0, 0), new Point(10, 10), CONFIG.TILE_SIZE, canMove, air);
+            // TODO: ПРОВЕРИТЬ!!!
 
         }
 

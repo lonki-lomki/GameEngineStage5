@@ -87,10 +87,10 @@ namespace GameEngineStage5
         /// <param name="arg_cell">объект, который будет искаться в массиве</param>
         /// <param name="arg_array">массив объектов</param>
         /// <returns>true - если объект найден, false - если объект не найден</returns>
-        private bool foundInArray(Cell arg_cell, Cell[] arg_array)
+        private bool foundInArray(Cell arg_cell, List<Cell> arg_array)
         {
             // Цикл по объектам в массиве
-            for (int index = 0; index < arg_array.Length; index++)
+            for (int index = 0; index < arg_array.Count; index++)
             {
                 // Проверить равенство искомого объекта и текущего объекта из массива
                 if (arg_cell.X == arg_array[index].X && arg_cell.Y == arg_array[index].Y)
@@ -242,59 +242,61 @@ namespace GameEngineStage5
             while (opened.Count > 0)
             {
                 // Сортируем массив opened по возрастанию значения поля f
-                opened.Sort();
-                opened.sort(function(a, b) {
-                    return a.f - b.f;
+                opened.Sort(delegate (Cell a, Cell b)
+                {
+                    return (int)(a.F - b.F);
                 });
 
                 // Выбираем из массива ячейку с минимальным значением поля f
-                var cell = opened[0];
+                Cell cell = opened[0];
                 // Проверить условие успешного окончания поиска пути
-                if (cell.x === goal.x && cell.y === goal.y)
+                if (cell.X == goal.X && cell.Y == goal.Y)
                 {
                     // Вернуть найденный путь
-                    //log.value += "path found\n";
                     return reconstruct_path(cell);
                 }
 
                 // Удалить из массива opened выбранный элемент
-                opened.shift();
+                opened.RemoveAt(0);
+                //opened.shift();
                 // Занести этот элемент в массив уже обработанных элементов
-                closed.push(cell);
+                //closed.push(cell);
+                closed.Add(cell);
 
                 // Получить массив всех соседей для данной ячейки
-                var neig = neighbor_nodes(cell, arg_map, arg_canMoveElements);
+                List<Cell> neig = neighbor_nodes(cell, arg_map, arg_canMoveElements);
 
-        // Цикл по соседним ячейкам для данной ячейки
-        for (var idx in neig)
+                // Цикл по соседним ячейкам для данной ячейки
+                for (int idx = 0; idx < neig.Count; idx++)
                 {
                     // Пропустить недоступные ячейки
-                    if (neig[idx].valid === false)
+                    if (neig[idx].valid == false)
                     {
                         continue;
                     }
                     // Проверить, что ячейки neig[idx] еще нет в массиве closed
-                    if (foundInArray(neig[idx], closed) === true)
+                    if (foundInArray(neig[idx], closed) == true)
                     {
                         // Если есть - пропускаем
                         continue;
                     }
 
-                    var tentative_g_score = cell.g + dist_between(cell, neig[idx]);  // Предварительная стоимость перемещения для обрабатываемого соседа
-                    var tentative_is_better = false;   // Предварительно считаем, что данная стоимость хуже
+                    float tentative_g_score = cell.G + dist_between(cell, neig[idx]);  // Предварительная стоимость перемещения для обрабатываемого соседа
+                    bool tentative_is_better = false;   // Предварительно считаем, что данная стоимость хуже
 
                     // Если сосед еще не в открытом списке
-                    if (foundInArray(neig[idx], opened) === false)
+                    if (foundInArray(neig[idx], opened) == false)
                     {
                         // Занести этого соседа в открытый список
-                        opened.push(neig[idx]);
+                        //opened.push(neig[idx]);
+                        opened.Add(neig[idx]);
                         // Предварительно считаем это лучшей ячейкой
                         tentative_is_better = true;
                     }
                     else
                     {
                         // Сосед уже в открытом списке, значит мы уже знаем его параметры
-                        if (tentative_g_score < neig[idx].g)
+                        if (tentative_g_score < neig[idx].G)
                         {
                             // Предварительная стоимость оказалась лучше ранее просчитанной
                             // Поэтому помечаем необходимость пересчёта остальных параметров
@@ -312,12 +314,12 @@ namespace GameEngineStage5
                     }
 
                     // Обновление свойств соседа
-                    if (tentative_is_better === true)
+                    if (tentative_is_better == true)
                     {
-                        neig[idx].came_from = cell; //Вершина с которой мы пришли. Используется для реконструкции пути.
-                        neig[idx].g = tentative_g_score;
-                        neig[idx].h = heuristic_cost_estimate(neig[idx], goal);
-                        neig[idx].f = neig[idx].g + neig[idx].h;
+                        neig[idx].cameFrom = cell; //Вершина с которой мы пришли. Используется для реконструкции пути.
+                        neig[idx].G = tentative_g_score;
+                        neig[idx].H = heuristic_cost_estimate(neig[idx], goal);
+                        neig[idx].F = neig[idx].G + neig[idx].H;
                     }
                 }
             }
@@ -325,7 +327,7 @@ namespace GameEngineStage5
             // Сюда попадаем, только ести перебрали все возможные ячейки, а путь так и не нашли
             // Возвращаем пустой маршрут
             //log.value += "path not found\n";
-            return [];
+            return null;
         }
 
 
