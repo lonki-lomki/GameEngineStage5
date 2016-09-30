@@ -57,6 +57,10 @@ namespace GameEngineStage5
         public List<PointF> path;   // Набор координат точек, из которых состоит путь
 
 
+        public List<Cell> aStarPath;
+        public Astar astar;
+
+
         private static GameData instance;
 
         private GameData()

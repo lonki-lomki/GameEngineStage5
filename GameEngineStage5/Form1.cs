@@ -223,6 +223,8 @@ namespace GameEngineStage5
                 }
             }
 
+            gd.astar.drawPath(g, gd.aStarPath);
+
             // TODO: тестирование анимации
             //////anim.render(g, 600, 100);
 

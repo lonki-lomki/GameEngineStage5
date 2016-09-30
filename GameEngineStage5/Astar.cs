@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace GameEngineStage5
 {
@@ -77,9 +76,6 @@ namespace GameEngineStage5
         {
 
         }
-
-
-
 
         /// <summary>
         /// Функция поиска объекта в массиве (сравнение объектов производится по значению полей x и y)
@@ -201,20 +197,20 @@ namespace GameEngineStage5
             return ret;
         }
 
-
-        // Функция поиска пути в массиве, описывающем прямоугольный мир от текущей точки до указанной точки
-        // (алгоритм A* с учётом гравитации)
-        // Вход: arg_map - массив уровня
-        //       arg_from - точка, от которой искать путь
-        //       arg_to - точка, до которой искать путь
-        //       arg_sprite_size - текущий размер тайла
-        //       arg_canMoveElements - массив типов элементов карты, по которым можно перемещаться
-        //       arg_mapAir - массив типов элементов карты, которые представляют собой воздух
-
-
+        /// <summary>
+        /// Функция поиска пути в массиве, описывающем прямоугольный мир от текущей точки до указанной точки
+        /// (алгоритм A*)
+        /// </summary>
+        /// <param name="arg_map">массив уровня</param>
+        /// <param name="arg_from">точка, от которой искать путь (пиксельные координаты)</param>
+        /// <param name="arg_to">точка, до которой искать путь (пиксельные координаты)</param>
+        /// <param name="arg_sprite_size">текущий размер тайла</param>
+        /// <param name="arg_canMoveElements">массив типов элементов карты, по которым можно перемещаться</param>
+        /// <param name="arg_mapAir">массив типов элементов карты, которые представляют собой воздух</param>
+        /// <returns>массив ячеек, которые составляют найденный путь, или null, если путь не найден</returns>
         public List<Cell> pathFinderAstar(Map arg_map, Point arg_from, Point arg_to, int arg_sprite_size, List<int> arg_canMoveElements, List<int> arg_mapAir)
         {
-            // Параметры поиска пути
+            // Параметры поиска пути (перевод в тайловые координаты)
             int x1 = (int)Math.Round((double)arg_from.X / arg_sprite_size);
             int y1 = (int)Math.Round((double)arg_from.Y / arg_sprite_size);
             int x2 = (int)Math.Round((double)arg_to.X / arg_sprite_size);
@@ -331,7 +327,20 @@ namespace GameEngineStage5
         }
 
 
-
-
+        /// <summary>
+        /// Отобрадение данного пути линиями и точками
+        /// </summary>
+        /// <param name="g">графический контекст</param>
+        /// <param name="path">путь в виде массива координат ячеек</param>
+        public void drawPath(Graphics g, List<Cell> path)
+        {
+            // Цикл по точкам пути
+            for (int i = 0; i < (path.Count - 1); i++)
+            {
+                // Вывести текущую точку и линию до следующей точки
+                g.DrawEllipse(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 2, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 2, 4, 4);
+                g.DrawLine(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 1, CONFIG.START_X + path[i + 1].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i + 1].Y * CONFIG.TILE_SIZE - 1);
+            }
+        }
     }
 }

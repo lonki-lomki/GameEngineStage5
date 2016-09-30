@@ -93,9 +93,11 @@ namespace GameEngineStage5
             canMove.Add(6);
             List<int> air = new List<int>();
 
-            Astar astar = new Astar();
-            List<Cell> aStarPath = astar.pathFinderAstar(gd.map, new Point(0, 0), new Point(10, 10), CONFIG.TILE_SIZE, canMove, air);
+            gd.astar = new Astar();
+            gd.aStarPath = gd.astar.pathFinderAstar(gd.map, new Point(2, 35), new Point(226, 384), CONFIG.TILE_SIZE, canMove, air);
             // TODO: ПРОВЕРИТЬ!!!
+
+            int iii = 0;
 
         }
 
