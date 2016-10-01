@@ -65,8 +65,8 @@ namespace GameEngineStage5
             // Ставим монстра в первую точку пути
             curPathPos = 0;
             // Получить координаты первого отрезка пути
-            startPos = gd.path[curPathPos];
-            endPos = gd.path[curPathPos + 1];
+            startPos = gd.aStarPath[curPathPos];
+            endPos = gd.aStarPath[curPathPos + 1];
             // Расстояние между точками
             distance = gd.distance(startPos, endPos);
             // Определить угол поаорота спрайта
@@ -95,7 +95,7 @@ namespace GameEngineStage5
                 // Монстру пора переходить на следующий отрезок пути
                 timeCounter -= (int) (distance / speed);
 
-                if (curPathPos == gd.path.Count - 2)
+                if (curPathPos == gd.aStarPath.Count - 2)
                 {
                     // Дошли до финиша
                     // Вызвать метод уничтожения монстра и нанесения урона игроку
@@ -108,8 +108,8 @@ namespace GameEngineStage5
                     curPathPos++;
                 }
                 // Настройка переметров для движения по новому отрезку пути
-                startPos = gd.path[curPathPos];
-                endPos   = gd.path[curPathPos + 1];
+                startPos = gd.aStarPath[curPathPos];
+                endPos = gd.aStarPath[curPathPos + 1];
                 distance = gd.distance(startPos, endPos);
                 angle    = gd.getAngle(startPos, endPos);
                 //gd.log.write("angle:" + angle);
@@ -162,8 +162,10 @@ namespace GameEngineStage5
 		{
             // TODO: !!!! это временно !!!!
             curPathPos = 0;
-            startPos = gd.path[curPathPos];
-            endPos = gd.path[curPathPos + 1];
+//            startPos = gd.path[curPathPos];
+//            endPos = gd.path[curPathPos + 1];
+            startPos = gd.aStarPath[curPathPos];
+            endPos = gd.aStarPath[curPathPos + 1];
             distance = gd.distance(startPos, endPos);
             angle = gd.getAngle(startPos, endPos);
         }

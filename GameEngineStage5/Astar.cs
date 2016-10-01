@@ -104,16 +104,16 @@ namespace GameEngineStage5
         /// </summary>
         /// <param name="arg_goal">конечная ячейка пути</param>
         /// <returns>список ячеек, составляющих путь от исходной ячейки к целевой</returns>
-        private List<Cell> reconstruct_path(Cell arg_goal)
+        private List<PointF> reconstruct_path(Cell arg_goal)
         {
-            List<Cell> path = new List<Cell>();
+            List<PointF> path = new List<PointF>();
             //int i = 0;
             Cell curr_cell = arg_goal;     // Поиск начинается с конечной ячейки
 
             // Цикл по ячейкам, составляющим путь
             while (curr_cell != null)
             {
-                path.Add(new Cell(curr_cell)); // Добавить ячейку в массив
+                path.Add(new PointF(CONFIG.START_X + curr_cell.X * CONFIG.TILE_SIZE, CONFIG.START_Y + curr_cell.Y * CONFIG.TILE_SIZE)); // Добавить ячейку в массив
                 curr_cell = curr_cell.cameFrom;
             }
             // Поменять порядок элементов списка на обратный
@@ -208,7 +208,7 @@ namespace GameEngineStage5
         /// <param name="arg_canMoveElements">массив типов элементов карты, по которым можно перемещаться</param>
         /// <param name="arg_mapAir">массив типов элементов карты, которые представляют собой воздух</param>
         /// <returns>массив ячеек, которые составляют найденный путь, или null, если путь не найден</returns>
-        public List<Cell> pathFinderAstar(Map arg_map, Point arg_from, Point arg_to, int arg_sprite_size, List<int> arg_canMoveElements, List<int> arg_mapAir)
+        public List<PointF> pathFinderAstar(Map arg_map, Point arg_from, Point arg_to, int arg_sprite_size, List<int> arg_canMoveElements, List<int> arg_mapAir)
         {
             // Параметры поиска пути (перевод в тайловые координаты)
             int x1 = (int)Math.Round((double)arg_from.X / arg_sprite_size);
@@ -332,14 +332,16 @@ namespace GameEngineStage5
         /// </summary>
         /// <param name="g">графический контекст</param>
         /// <param name="path">путь в виде массива координат ячеек</param>
-        public void drawPath(Graphics g, List<Cell> path)
+        public void drawPath(Graphics g, List<PointF> path)
         {
             // Цикл по точкам пути
             for (int i = 0; i < (path.Count - 1); i++)
             {
                 // Вывести текущую точку и линию до следующей точки
-                g.DrawEllipse(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 2, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 2, 4, 4);
-                g.DrawLine(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 1, CONFIG.START_X + path[i + 1].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i + 1].Y * CONFIG.TILE_SIZE - 1);
+//                g.DrawEllipse(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 2, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 2, 4, 4);
+//                g.DrawLine(Pens.White, CONFIG.START_X + path[i].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i].Y * CONFIG.TILE_SIZE - 1, CONFIG.START_X + path[i + 1].X * CONFIG.TILE_SIZE - 1, CONFIG.START_Y + path[i + 1].Y * CONFIG.TILE_SIZE - 1);
+                g.DrawEllipse(Pens.White,  path[i].X - 2, path[i].Y - 2, 4, 4);
+                g.DrawLine(Pens.White, path[i].X - 1, path[i].Y - 1, path[i + 1].X - 1, path[i + 1].Y - 1);
             }
         }
     }

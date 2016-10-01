@@ -52,6 +52,20 @@ namespace GameEngineStage5
                         tileCount++;
                     }
                 }
+
+                // Заполнить массив проходимости тайлов
+                foreach (int key in ts.TileProperties.Keys)
+                {
+                    Tileset.TilePropertyList tpl = ts.TileProperties[key];
+                    //gd.log.write("key:" + (ts.FirstTileID + key) + " passability:" + tpl["Passability"]);
+                    if ("1".Equals(tpl["Passability"]))
+                    {
+                        gd.canMove.Add(ts.FirstTileID + key);
+                    }
+                }
+
+
+
             }
 
             // Загрузить путь, по которому движутся враги
@@ -81,27 +95,19 @@ namespace GameEngineStage5
 			// Добавить объект на сцену
 			objects.Add(tmo);
 
+            // Получить путь движения монстра с помощью алгоритма поиска пути
+            gd.astar = new Astar();
+            gd.aStarPath = gd.astar.pathFinderAstar(gd.map, new Point(2, 35), new Point(226, 384), CONFIG.TILE_SIZE, gd.canMove, new List<int>());
+
             // Добавить монстра
             Monster m = new Monster(0.2f, 1.0f, 1.0f, 1.0f, true);
             m.setLayer(2);
             m.setImage(gd.rm.getImage("*"));
             objects.Add(m);
 
-            // Проверка алгоритма поиска пути
-            // TODO: Описание проходимых ячеек (читать из файла описания уровня)
-            List<int> canMove = new List<int>();
-            canMove.Add(6);
-            List<int> air = new List<int>();
-
-            gd.astar = new Astar();
-            gd.aStarPath = gd.astar.pathFinderAstar(gd.map, new Point(2, 35), new Point(226, 384), CONFIG.TILE_SIZE, canMove, air);
-            // TODO: ПРОВЕРИТЬ!!!
-
-            int iii = 0;
-
         }
 
-		public override void KeyDown(object sender, KeyEventArgs e)
+        public override void KeyDown(object sender, KeyEventArgs e)
         {
 			base.KeyDown(sender, e);
 

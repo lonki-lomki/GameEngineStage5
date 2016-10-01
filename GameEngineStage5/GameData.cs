@@ -42,6 +42,8 @@ namespace GameEngineStage5
 
         public int curMonsterNumber = 1;    // Номер текущего монстра (для уникальной нумерации монстров)
 
+        public List<int> canMove = new List<int>(); // Массив проходимости тайлов - заносятся индексы проходимых тайлов
+
         //public Player player;
 
         //public Landscape landscape;
@@ -54,10 +56,9 @@ namespace GameEngineStage5
 
         public SpriteSheet ss;
 
-        public List<PointF> path;   // Набор координат точек, из которых состоит путь
+        public List<PointF> path;   // Набор координат точек, из которых состоит путь (объект - polyline)
 
-
-        public List<Cell> aStarPath;
+        public List<PointF> aStarPath;
         public Astar astar;
 
 
@@ -147,6 +148,7 @@ namespace GameEngineStage5
             float dY = p2.Y - p1.Y;
             return new PointF(p1.X + dX * percent, p1.Y + dY * percent);
         }
+
     }
 
 }
