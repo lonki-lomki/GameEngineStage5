@@ -34,6 +34,11 @@ namespace GameEngineStage5
 
         /////////////////////////////////////////////////////////
 
+        /// <summary>
+        /// Множитель, влияющий на игровую скорость (скорость изменения времени, чем больше значение, тем быстрее идёт время)
+        /// </summary>
+        public int gameSpeed = 1;
+
         public Map map;
 
 		public Scene curScene = null;
@@ -60,6 +65,9 @@ namespace GameEngineStage5
 
         public List<PointF> aStarPath;
         public Astar astar;
+
+        public List<Wave> waves;
+
 
 
         private static GameData instance;

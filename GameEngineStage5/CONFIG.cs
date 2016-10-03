@@ -21,10 +21,8 @@ namespace GameEngineStage5
 
         public static readonly float MAX_ENG_POWER = 5.0f;  // Максимальная мощность двигателя
 
-//        public static readonly float MAX_LANDING_SPEED = 1.0f;  // Максимальная безопасная скорость касания платформы
-
-//        public static readonly float MAX_LANDING_ANGLE = 15.0f; // Максимальный безопасный угол касания платформы
-
+        public static readonly float timeBetweenWaves = 25.0f;  // Время между волнами
+        public static readonly float timeBetweenMob = 1.0f;     // Время между монстрами внутри волны
 
     }
 }
