@@ -48,6 +48,11 @@ namespace GameEngineStage5
 
 		private bool isDead = false;	// Флаг, показывающий, что данны монстр уже уничтожен
 
+        public Monster() : base()
+        {
+
+        }
+
         public Monster (float speed, float hp, float damage, float exp, bool last)
 		{
             this.speed = speed;

@@ -73,6 +73,7 @@
     <Compile Include="GameScene.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainMenuScene.cs" />
+    <Compile Include="MobStruct.cs" />
     <Compile Include="PhysWorld.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />

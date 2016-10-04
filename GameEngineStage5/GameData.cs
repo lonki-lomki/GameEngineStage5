@@ -157,6 +157,19 @@ namespace GameEngineStage5
             return new PointF(p1.X + dX * percent, p1.Y + dY * percent);
         }
 
+
+        public MobStruct getMobParameters(string monsterType)
+        {
+            MobStruct ms;
+
+            // Выбрать значение из коллекции по данному ключу
+            //bool result = mobTypes.TryGetValue(monsterType, out ms);
+
+            // TODO: доделывать здесь
+
+            return ms;
+        }
+
     }
 
 }
