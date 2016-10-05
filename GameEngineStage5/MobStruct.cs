@@ -1,8 +1,11 @@
-﻿public struct MobStruct
+﻿namespace GameEngineStage5
 {
-    public float speed;
-    public float hp;
-    public float damage;
-    public float exp;
-    public string tile_type;
+    public struct MobStruct
+    {
+        public float speed;
+        public float hp;
+        public float damage;
+        public float exp;
+        public string tile_type;
+    }
 }

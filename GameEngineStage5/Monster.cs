@@ -167,8 +167,6 @@ namespace GameEngineStage5
 		{
             // TODO: !!!! это временно !!!!
             curPathPos = 0;
-//            startPos = gd.path[curPathPos];
-//            endPos = gd.path[curPathPos + 1];
             startPos = gd.aStarPath[curPathPos];
             endPos = gd.aStarPath[curPathPos + 1];
             distance = gd.distance(startPos, endPos);

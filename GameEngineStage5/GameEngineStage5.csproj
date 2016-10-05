@@ -85,6 +85,7 @@
     <Compile Include="TiledParser.cs" />
     <Compile Include="TileMap.cs" />
     <Compile Include="TileMapObject.cs" />
+    <Compile Include="TowerStruct.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Wave.cs" />
     <Compile Include="WaveManager.cs" />

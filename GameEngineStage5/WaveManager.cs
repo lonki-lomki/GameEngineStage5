@@ -79,43 +79,41 @@
             if (gd.currentGameState == GameData.GameState.Level)
             {
                 // Проверить, что есть еще непустые волны, из которых можно сгенерировать монстра
-                if (this.lastWave == true && this.currentWave.isEmpty() == true)
+                if (lastWave == true && currentWave.isEmpty() == true)
                 {
                     // Последняя волна - пуста. Выходим.
-                    //Debug.Log("Last Wave, Last Monster");
                     return null;
                 }
 
                 // Таймаут волны и таймаут монстра - независимы
 
                 // Обновить переменные, которые отсчитывают таймаут
-                this.timeToNextMob += delta * gd.gameSpeed;
-                this.timeToNextWave += delta * gd.gameSpeed;
+                timeToNextMob += delta * gd.gameSpeed;
+                timeToNextWave += delta * gd.gameSpeed;
 
                 // Проверить наличие монстров в текущей волне
                 if (currentWave != null && currentWave.isEmpty() == false)
                 {
                     // Проверить необходимость генерации нового монстра
-                    if (this.timeToNextMob >= CONFIG.timeBetweenMob)
+                    if (timeToNextMob >= CONFIG.timeBetweenMob)
                     {
-                        this.timeToNextMob -= CONFIG.timeBetweenMob;
+                        timeToNextMob -= CONFIG.timeBetweenMob;
                         // Новый монстр
-                        m = this.currentWave.Next();
+                        m = currentWave.Next();
                         // Обнулить счётчик времени до генерации следующей волны
-                        //Debug.Log("Next Monster");
                     }
                 }
                 else
                 {
                     // Волна окончилась, ждём момента генерации новой волны
-                    if (this.timeToNextWave >= CONFIG.timeBetweenWaves)
+                    if (timeToNextWave >= CONFIG.timeBetweenWaves)
                     {
                         //this.timeToNextWave -= CONST.timeBetweenWaves;
-                        this.timeToNextWave = 0.0f;
+                        timeToNextWave = 0.0f;
                         // Новая волна
                         NextWave();
                         // Обнулить счётчик времени для генерации монстров
-                        this.timeToNextMob = 0.0f;
+                        timeToNextMob = 0.0f;
                     }
                 }
             }
@@ -161,7 +159,7 @@
         /// <returns>номер текущей волны</returns>
         public int getWaveIndex()
         {
-            return this.curWaveIndex + 1;
+            return curWaveIndex + 1;
         }
 
         /// <summary>
@@ -170,7 +168,7 @@
         /// <returns>время до начала следующей волны</returns>
         public float getTimeToNextWave()
         {
-            return CONFIG.timeBetweenWaves - this.timeToNextWave;
+            return CONFIG.timeBetweenWaves - timeToNextWave;
         }
 
         /// <summary>
@@ -178,9 +176,9 @@
         /// </summary>
         public void forceNextWave()
         {
-            if (this.currentWave == null || this.currentWave != null && this.currentWave.isEmpty())
+            if (currentWave == null || currentWave != null && currentWave.isEmpty())
             {
-                this.timeToNextWave = CONFIG.timeBetweenWaves;
+                timeToNextWave = CONFIG.timeBetweenWaves;
             }
         }
 

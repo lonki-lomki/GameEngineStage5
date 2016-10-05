@@ -69,11 +69,43 @@ namespace GameEngineStage5
 
             MobStruct ms = GameData.Instance.getMobParameters(curMonsterType);
 
-            m = new Monster(float speed, float hp, float damage, float exp, bool last);
-           
+            m = new Monster(ms.speed, ms.hp, ms.damage, ms.exp, false /* bool last */);
 
+            // Получить индекс следующего монстра
+            // (если текущий тип закончился, получить следующий тип из волны)
+            curMonsterIndex++;
+            // Проверить на окончание монстров текущего типа
+            if (curMonsterIndex >= monsterCount)
+            {
+                // Монстры данного типа окончились - берем следующую группу монстров
+                monsterTypeIndex++;
+                curMonsterIndex = 0;
+                // Проверка окончания волны
+                if (monsterTypeIndex >= waves.Length)
+                {
+                    // Монстры окончились
+                    empty = true;
 
-            return null;
+                    // Пометить сгенерированного монстра как последнего в волне
+                    m.setLastInWave(true);
+                }
+                else
+                {
+                    // Волна продолжается
+
+                    // Разбор строки текущего элемента волны
+                    string[] arr = waves[monsterTypeIndex].Split(':');
+                    // Выделить тип монстра
+                    curMonsterType = arr[0];
+                    // Выделить количество монстров данного типа
+                    if (int.TryParse(arr[1], out monsterCount) == false)
+                    {
+                        monsterCount = 1;
+                    }
+                }
+            }
+            return m;
+
         }
 
         /// <summary>
@@ -82,7 +114,7 @@ namespace GameEngineStage5
         /// <returns><c>true</c>, если в волне больше нет монстров, иначе - <c>false</c></returns>
         public bool isEmpty()
         {
-            return this.empty;
+            return empty;
         }
     }
 }

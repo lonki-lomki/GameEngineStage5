@@ -68,6 +68,9 @@ namespace GameEngineStage5
 
         public List<Wave> waves;
 
+        public Dictionary<string, MobStruct> mobtypes;
+
+        public Dictionary<string, TowerStruct> towertypes;
 
 
         private static GameData instance;
@@ -163,9 +166,7 @@ namespace GameEngineStage5
             MobStruct ms;
 
             // Выбрать значение из коллекции по данному ключу
-            //bool result = mobTypes.TryGetValue(monsterType, out ms);
-
-            // TODO: доделывать здесь
+            bool result = mobtypes.TryGetValue(monsterType, out ms);
 
             return ms;
         }
