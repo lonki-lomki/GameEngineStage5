@@ -36,42 +36,44 @@ namespace GameEngineStage5
 
             // Загрузить отдельные спрайты в менеджер ресурсов как самостоятельные изображения (для ускорения отображения)
             // TODO: загружать только Tiles!!!
-            foreach (Tileset ts in gd.map.Tilesets.Values)
+            //////foreach (Tileset ts in gd.map.Tilesets.Values)
+            //////{
+
+            Tileset ts = gd.map.Tilesets["Tiles"];
+
+            int tileCount = ts.FirstTileID;
+            // Загрузить базовое изображение
+            gd.rm.addElementAsImage(ts.Image, @"Resources\Sprites\" + ts.Image);
+
+            // Создать объект - карту спрайтов
+            gd.ss = new SpriteSheet(gd.rm.getImage(ts.Image), ts.TileWidth, ts.TileHeight, ts.Spacing, ts.Margin);
+
+            // Цикл по спрайтам внутри матрицы спрайтов
+            for (int j = 0; j < ts.ImageHeight / ts.TileHeight; j++)
             {
-                int tileCount = ts.FirstTileID;
-                // Загрузить базовое изображение
-                gd.rm.addElementAsImage(ts.Image, @"Resources\Sprites\" + ts.Image);
-
-                // Создать объект - карту спрайтов
-                gd.ss = new SpriteSheet(gd.rm.getImage(ts.Image), ts.TileWidth, ts.TileHeight, ts.Spacing, ts.Margin);
-
-                // Цикл по спрайтам внутри матрицы спрайтов
-                for (int j = 0; j < ts.ImageHeight/ts.TileHeight; j++)
+                for (int i = 0; i < ts.ImageWidth / ts.TileWidth; i++)
                 {
-                    for (int i = 0; i < ts.ImageWidth/ts.TileWidth; i++)
-                    {
-                        // Добавить этот спрайт в хранилище и наименованием tileset-<порядковый номер спрайта>
-                        // TODO: как быть, если наборов тайлов несколько? Как вести нумерацию?
-                        gd.rm.addElementAsImage("tileset-" + tileCount, gd.ss.getSprite(i, j));
-                        tileCount++;
-                    }
+                    // Добавить этот спрайт в хранилище и наименованием tileset-<порядковый номер спрайта>
+                    // TODO: как быть, если наборов тайлов несколько? Как вести нумерацию?
+                    gd.rm.addElementAsImage("tileset-" + tileCount, gd.ss.getSprite(i, j));
+                    tileCount++;
                 }
-
-                // Заполнить массив проходимости тайлов
-                foreach (int key in ts.TileProperties.Keys)
-                {
-                    Tileset.TilePropertyList tpl = ts.TileProperties[key];
-                    //gd.log.write("key:" + (ts.FirstTileID + key) + " passability:" + tpl["Passability"]);
-                    if ("1".Equals(tpl["Passability"]))
-                    {
-                        gd.canMove.Add(ts.FirstTileID + key);
-                    }
-                }
-
-
-
             }
 
+            // Заполнить массив проходимости тайлов
+            foreach (int key in ts.TileProperties.Keys)
+            {
+                Tileset.TilePropertyList tpl = ts.TileProperties[key];
+                //gd.log.write("key:" + (ts.FirstTileID + key) + " passability:" + tpl["Passability"]);
+                if ("1".Equals(tpl["Passability"]))
+                {
+                    gd.canMove.Add(ts.FirstTileID + key);
+                }
+            }
+
+            //////}
+
+            /*
             // Загрузить путь, по которому движутся враги
             // Пример строки: "0,0 96,0 97,63 129,64 130,191 319,192 321,100 447,100 447,253 225,257 226,353"
             // набор пиксельных координат Х и У относительно координаты левого верхнего угла объекта.
@@ -87,7 +89,7 @@ namespace GameEngineStage5
                 string[] arr = points[i].Split(',');
                 gd.path.Add(new PointF(float.Parse(arr[0]) + path_x + CONFIG.START_X, float.Parse(arr[1]) + path_y + CONFIG.START_Y));
             }
-
+            */
 
             // Создать объект для отображения карты
             TiledMapObject tmo = new TiledMapObject("TiledMapObject", gd, gd.map);
