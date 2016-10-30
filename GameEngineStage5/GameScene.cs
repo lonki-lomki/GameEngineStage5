@@ -73,6 +73,50 @@ namespace GameEngineStage5
 
             //////}
 
+            // Загрузить параметры монстров
+            // TODO: если тайлсет собран из нескольких изображений, в поле Image записывается имя последнего изображения
+            ts = gd.map.Tilesets["Monsters"];
+            
+            foreach (int key in ts.TileProperties.Keys)
+            {
+                Tileset.TilePropertyList tpl = ts.TileProperties[key];
+                // Доступны следующие свойства монстра: Name, Damage, Exp, HP, Speed
+                // Создать структуру
+                MobStruct ms = new MobStruct();
+                ms.damage = float.Parse(tpl["Damage"]);
+                ms.exp    = float.Parse(tpl["Exp"]);
+                ms.hp     = float.Parse(tpl["HP"]);
+                ms.speed  = float.Parse(tpl["Speed"]);
+                ms.name   = tpl["Name"];
+                // Занести в хранилище
+                gd.mobtypes.Add(ms.name, ms);
+            }
+
+            // Загрузить параметры башен
+            ts = gd.map.Tilesets["Towers"];
+
+            foreach (int key in ts.TileProperties.Keys)
+            {
+                Tileset.TilePropertyList tpl = ts.TileProperties[key];
+                // Доступны следующие свойства башни: BulletSpeed, Cost, DamFreq, DamRadius, Damage, Desc, Elem, Name, Next
+                // Создать структуру
+                TowerStruct tws = new TowerStruct();
+                /*
+                tws.bulletSpeed;
+                tws.cost;
+                tws.damage;
+                tws.damage_freq;
+                tws.damage_radius;
+                tws.description;
+                tws.element;
+                ????tws.name;
+                tws.nextTowerType;
+                ????tws.towerType;
+                */
+            }
+
+
+
             /*
             // Загрузить путь, по которому движутся враги
             // Пример строки: "0,0 96,0 97,63 129,64 130,191 319,192 321,100 447,100 447,253 225,257 226,353"
