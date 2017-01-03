@@ -113,6 +113,9 @@ namespace GameEngineStage5
                 tws.nextTowerType;
                 ????tws.towerType;
                 */
+
+                // Занести в хранилище
+                // ...
             }
 
 
