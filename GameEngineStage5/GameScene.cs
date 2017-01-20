@@ -92,6 +92,13 @@ namespace GameEngineStage5
                 gd.mobtypes.Add(ms.name, ms);
             }
 
+
+            // TODO: проверка сериализации списка монстров
+            List<MobStruct> mmm =  new List<MobStruct>(gd.mobtypes.Values);
+            string sss = UtilsParse.ToStringList(mmm);
+            gd.log.write(sss);
+
+
             // Загрузить параметры башен
             ts = gd.map.Tilesets["Towers"];
 

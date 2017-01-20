@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace GameEngineStage5
 {
+
+    // TODO: в Tiled хранить ТОЛЬКО конфигурацию уровня, остальную информацию хранить в отдельных файлах в удобном формате
 
     // TODO: хранение и чтение данных об этапе в файле тайловой карты (.tmx) Отдельным уровнем, строками тайлов, количество монстров - параметром.
     // TODO: построение карты проходимости (для применения алгоритма поиска пути)
@@ -72,6 +75,8 @@ namespace GameEngineStage5
 
             // Инициализация менеджера ресурсов
             gd.rm = ResourceManager.Instance;
+
+            gd.mobtypes = new Dictionary<string, MobStruct>();
 
             //------------------------------------------------------
 
