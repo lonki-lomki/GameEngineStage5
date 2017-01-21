@@ -78,6 +78,8 @@ namespace GameEngineStage5
 
             gd.mobtypes = new Dictionary<string, MobStruct>();
 
+            gd.towertypes = new Dictionary<string, TowerStruct>();
+
             //------------------------------------------------------
 
             // Создать стартовую сцену игры

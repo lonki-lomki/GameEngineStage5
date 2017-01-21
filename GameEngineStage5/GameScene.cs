@@ -108,22 +108,24 @@ namespace GameEngineStage5
                 // Доступны следующие свойства башни: BulletSpeed, Cost, DamFreq, DamRadius, Damage, Desc, Elem, Name, Next
                 // Создать структуру
                 TowerStruct tws = new TowerStruct();
-                /*
-                tws.bulletSpeed;
-                tws.cost;
-                tws.damage;
-                tws.damage_freq;
-                tws.damage_radius;
-                tws.description;
-                tws.element;
-                ????tws.name;
-                tws.nextTowerType;
-                ????tws.towerType;
-                */
+                tws.bulletSpeed = float.Parse(tpl["BulletSpeed"]);
+                tws.cost = float.Parse(tpl["Cost"]);
+                tws.damage = float.Parse(tpl["Damage"]);
+                tws.damage_freq = float.Parse(tpl["DamFreq"]);
+                tws.damage_radius = float.Parse(tpl["DamRadius"]);
+                tws.description = tpl["Desc"];
+                tws.element = tpl["Elem"];
+                tws.name = tpl["Name"];
+                tws.nextTowerType = tpl["Next"];
 
                 // Занести в хранилище
-                // ...
+                gd.towertypes.Add(tws.name, tws);
             }
+
+            // TODO: проверка сериализации списка башен
+            List<TowerStruct> ttt = new List<TowerStruct>(gd.towertypes.Values);
+            sss = UtilsParse.ToStringList(ttt);
+            gd.log.write(sss);
 
 
 
